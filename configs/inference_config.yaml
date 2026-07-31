@@ -1,0 +1,93 @@
+# configs/inference_config.yaml
+
+# --- Path Configuration ---
+inference_data_root: "/mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Validation/Images"
+output_dir: "./experiments22"
+submission_zip_path: "./prediction_train25.zip"
+prediction_root: "./prediction_train25"
+keep_prediction_root: true
+# Cross-attention SVD already estimates the transform in the physical CBCT
+# frame. Do not apply the old affine-domain right-angle matrices afterward.
+domain_corrections_path: null
+
+# --- Experiment Configuration ---
+upper_jaw_experiment_name: "upper_jaw_independent_paired_svd_v13"
+lower_jaw_experiment_name: "lower_jaw_independent_paired_svd_v13"
+# Both jaws are trained separately by the same main_train.py and YAML.
+
+# --- Device Configuration ---
+device: "cuda"
+num_points_stl: 4096
+num_points_cbct: 8192
+feature_dim: 128
+
+# These three options must match v3 training.
+cbct_threshold: 800
+cbct_surface_only: true
+use_anatomical_cbct_roi: true
+cbct_roi_relative_z:
+  upper: [0.08, 1.00]
+  lower: [0.00, 1.00]
+cbct_roi_min_points: 8192
+cbct_scale_mode:
+  upper: "full"
+  lower: "sampled"
+target_dense_points: 1024
+robust_matching: true
+match_temperature: 0.07
+registration_head: "cross_attention_svd"
+attention_heads: 4
+attention_dropout: 0.1
+direct_translation_range: 2.0
+target_saliency_prior_weight: 0.0
+# Exactly matches the shared main_train.py configuration for both jaws.
+translation_residual_range: 0.20
+translation_residual_detach_features: true
+translation_residual_hidden_dim: 32
+
+# Conservative coarse selection: half learned jaw points, half global context.
+use_target_saliency_sampling: false
+target_saliency_required: false
+target_saliency_candidate_points: 65536
+target_saliency_top_pool_points: 4096
+target_saliency_high_fraction: 0.50
+
+# Conservative competition submission: use exactly one best_model.pth for
+# each jaw. Do not assemble a matrix from multiple checkpoints.
+use_metric_specific_checkpoints: false
+
+# Training GT lower-minus-upper translations have mean
+# [-0.149, -0.233, 0.825] mm and maximum norm 6.51 mm. Only a clearly
+# divergent lower prediction is pulled halfway toward its paired upper anchor.
+# Keep the submitted matrix equal to the selected model output; do not alter
+# lower-jaw translation using the upper-jaw prediction.
+use_upper_guided_lower_translation: false
+lower_minus_upper_translation_prior_mm: [-0.148856, -0.233419, 0.825478]
+lower_translation_constraint_threshold_mm: 12.0
+lower_translation_upper_blend: 0.50
+
+# Training GT shows that this CBCT coordinate signature is the only observed
+# left-handed domain (8/8 training matrices have det=-1). The public set has
+# seven cases with the same signature. This selects the Kabsch parity only;
+# rotation and translation are still predicted entirely by the network.
+negative_determinant_affine_signatures:
+  - "-0.30|0.00|0.00|39.90|0.00|-0.30|0.00|39.90|0.00|0.00|0.30|-29.70"
+
+inference_seed: 2026
+tta_samples: 5
+tta_max_translation_spread_mm: 20.0
+tta_max_rotation_spread_deg: 15.0
+
+# Keep post-processing disabled for the first cross-SVD evaluation. Enable it
+# only after labeled A/B validation proves lower mm and degree errors.
+use_icp_refinement: false
+icp_source_points: 12000
+icp_target_points: 20000
+icp_max_iterations: 25
+icp_trim_ratio: 0.5
+icp_tolerance: 0.001
+icp_max_correspondence_distance: 10.0
+icp_roi_margin_mm: 10.0
+icp_min_target_points: 200
+icp_max_total_translation_mm: 4.0
+icp_max_total_rotation_deg: 3.0

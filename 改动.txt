@@ -1,0 +1,16 @@
+[registration_loss.py (line 11)](/D:/github-zip/STSR-Challenge-main/STSR-Challenge-main/STSR-2025/baseline/STSR-Task2-Baseline/losses/registration_loss.py:11)
+加了旋转误差、平移误差和组合损失。现在 loss 不再只有 point MSE。
+
+[transform_utils.py (line 39)](/D:/github-zip/STSR-Challenge-main/STSR-Challenge-main/STSR-2025/baseline/STSR-Task2-Baseline/utils/transform_utils.py:39)
+加了 recover_original_transform_torch，训练/验证时可以把归一化矩阵恢复回世界坐标。
+
+[main_train.py (line 13)](/D:/github-zip/STSR-Challenge-main/STSR-Challenge-main/STSR-2025/baseline/STSR-Task2-Baseline/main_train.py:13)
+现在会：
+训练时同时看 point / rotation / translation loss
+验证时直接计算 Mean_Translation_Error_mm 和 Mean_Rotation_Error_deg
+best_model.pth 按验证分数保存，不再只按 val loss
+
+[train_config.yaml (line 35)](/D:/github-zip/STSR-Challenge-main/STSR-Challenge-main/STSR-2025/baseline/STSR-Task2-Baseline/configs/train_config.yaml:35)
+新增了这两个配置：
+loss_weights
+val_score_weights

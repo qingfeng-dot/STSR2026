@@ -1,0 +1,21 @@
+# configs/pretrain_config.yaml
+
+train_data_root: "/mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Train-Unlabeled"
+output_dir: "./experiments1"
+experiment_name: "upper_jaw_pretrain_v1"
+
+jaw_type: "upper"
+device: "cuda"
+
+epochs: 100
+batch_size: 2
+learning_rate: 0.0001
+temperature: 0.1
+cross_modal_weight: 0.5
+
+num_points_stl: 4096
+num_points_cbct: 8192
+num_workers: 4
+
+feature_dim: 128
+projection_dim: 64

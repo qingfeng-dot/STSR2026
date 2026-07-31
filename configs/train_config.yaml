@@ -1,0 +1,168 @@
+# configs/train_config.yaml
+
+# --- Path Configuration ---
+# Root directory for training data (containing -Corrected folders with Images and Labels)
+train_data_root: "/mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Train-Labeled"
+# Root directory for validation data
+val_data_root: "/mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Validation"
+# Root directory for experiment outputs (weights, logs, etc.)
+output_dir: "./experiments22"
+
+
+# --- Experiment Configuration ---
+# Experiment name (will create a subfolder under output_dir)
+# Train upper/lower separately; CLI --experiment-name can override this.
+experiment_name: "upper_jaw_independent_paired_svd_v13"
+experiment_names:
+  upper: "upper_jaw_independent_paired_svd_v13"
+  lower: "lower_jaw_independent_paired_svd_v13"
+
+# Jaw type to train: 'lower' or 'upper'
+jaw_type: "upper"
+# Device to use ('cuda' or 'cpu')
+device: "cuda"
+
+# --- Training Hyperparameters ---
+epochs: 200
+batch_size: 4
+training_seed: 2026
+learning_rate: 0.0001
+minimum_learning_rate: 0.000001
+weight_decay: 0.0001
+gradient_clip_norm: 5.0
+use_ema: true
+ema_decay: 0.995
+
+# Public validation data usually contains Images only. Reserve a fixed split
+# from Train-Labeled so best_model.pth is selected by mm/degree metrics.
+use_internal_validation: true
+internal_val_fraction: 0.20
+internal_val_seed: 2026
+# The old four-case split contained only det=+1 and hid complete failure on
+# mirrored transforms. Keep both handedness groups in every validation split.
+internal_val_split_mode: "chirality_stratified"
+
+# --- Dataset Configuration ---
+num_points_stl: 4096        # Number of points sampled from STL mesh
+num_points_cbct: 8192       # Number of points sampled from CBCT scan
+num_workers: 8              # Linux DataLoader worker processes
+pin_memory: true
+persistent_workers: true
+prefetch_factor: 4
+allow_tf32: true
+cudnn_benchmark: true
+use_bf16: true
+
+# Build once, reuse every epoch. The first launch spends time creating these
+# uncompressed archives; later epochs and future runs load them directly.
+use_point_cache: true
+point_cache_dir: "./point_cache"
+prepare_point_cache_before_training: true
+rebuild_point_cache: false
+stl_cache_points: 32768
+cbct_cache_points: 131072
+cache_progress_interval: 10
+
+# Full validation is expensive; epoch 1, every second epoch, and the final
+# epoch are validated. best_model.pth is still selected only by validation.
+validation_interval: 2
+# Use exactly the same CBCT extraction in training and inference.
+cbct_threshold: 800
+cbct_surface_only: true
+
+# Jaw-aware target range in the complete threshold-cloud frame. Upper-jaw ROI
+# improved its held-out score. Lower-jaw cropping harmed both metrics, so lower
+# keeps the full cloud and its useful global anatomical context. Both choices
+# still pass through the same dataset, model, loss, and training code.
+use_anatomical_cbct_roi: true
+cbct_roi_relative_z:
+  upper: [0.08, 1.00]
+  lower: [0.00, 1.00]
+cbct_roi_min_points: 8192
+
+# Keep each jaw on the normalization distribution that worked best in the
+# ablations. "sampled" exactly reproduces the original experiments9 behavior.
+cbct_scale_mode:
+  upper: "full"
+  lower: "sampled"
+
+# Lower-jaw training additionally sees the upper STL/GT pair from each of the
+# same training patients. Validation remains lower-only. This doubles lower
+# geometric supervision without using upper input during lower inference.
+use_paired_jaw_auxiliary_training:
+  upper: false
+  lower: true
+
+# --- Model Configuration ---
+feature_dim: 128            # Feature dimension output by PointNet++
+# Use 1024 for newly trained models to retain all CBCT encoder points.
+# Keep inference_config.yaml identical to this value.
+target_dense_points: 1024
+robust_matching: true
+match_temperature: 0.07
+
+# Single-stage geometry-constrained head. Cross-attention learns correspondences
+# and orthogonal SVD outputs det=+1 or det=-1 as required by the CBCT frame.
+registration_head: "cross_attention_svd"
+attention_heads: 4
+attention_dropout: 0.1
+direct_translation_range: 2.0  # ignored by cross_attention_svd
+# A single-checkpoint translation branch corrects only the SVD translation.
+# Its normalized vector norm is bounded to 0.20 (about 20 mm at the median
+# training CBCT scale). Detached inputs prevent this branch from pulling the
+# encoders and SVD rotation away from their geometric objective.
+translation_residual_range: 0.20
+translation_residual_detach_features: true
+translation_residual_hidden_dim: 32
+translation_residual_loss_weight: 1.0
+auxiliary_pose_weight: 0.0
+# Disable the failed saliency prior completely. Earlier code accidentally did
+# not forward this value into CrossAttentionSVDHead; that hard error is fixed.
+target_saliency_prior_weight: 0.0
+
+# Training-only neighborhood supervision for the existing correspondence
+# matrix. The exact same loss and parameters are used for upper and lower jaws.
+correspondence_loss_weight: 0.1
+correspondence_radius_mm: 5.0
+correspondence_coordinate_weight: 1.0
+
+# GT-supervised CBCT jaw saliency. Target points within 5 mm of the transformed
+# STL are positives, points beyond 10 mm are negatives, and the buffer is
+# ignored. Balanced focal loss prevents background bone from dominating.
+target_saliency_loss_weight: 0.0
+target_saliency_positive_radius_mm: 5.0
+target_saliency_negative_radius_mm: 10.0
+target_saliency_focal_gamma: 2.0
+
+# Strong source-pose perturbations teach recovery from large initial offsets.
+# Translation is in the normalized point-cloud coordinate system.
+augmentation_translation: 0.10
+augmentation_rotation: 20.0
+augmentation_start_translation: 0.02
+augmentation_start_rotation: 5.0
+augmentation_warmup_epochs: 15
+
+# --- Loss and model selection configuration ---
+loss_weights:
+  point: 1.0
+  # Around the current 40 mm / 22 degree regime, rotation=2 and
+  # translation=0.02 give both leaderboard metrics comparable influence.
+  rotation: 2.0
+  translation: 0.02
+
+val_score_weights:
+  # Single-checkpoint selection: one millimetre and one degree receive equal
+  # weight. Rotation is already comfortably ahead of the current fourth-place
+  # result, while translation is the ranking bottleneck.
+  translation: 0.1
+  rotation: 0.1
+
+# --- Optional pretraining initialization ---
+load_pretrained: true
+pretrained_checkpoints:
+  lower: "./experiments1/lower_jaw_pretrain_v1/checkpoints/best_model.pth"
+  upper: "./experiments1/upper_jaw_pretrain_v1/checkpoints/best_model.pth"
+
+# Train the same registration architecture independently on each jaw dataset.
+# The optional self-supervised PointNet encoders above remain enabled.
+load_registration_initialization: false

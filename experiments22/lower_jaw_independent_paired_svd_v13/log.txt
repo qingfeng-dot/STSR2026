@@ -1,0 +1,377 @@
+--- start experiment: lower_jaw_independent_paired_svd_v13 ---
+training seed: 2026
+configuration file:
+allow_tf32: true
+attention_dropout: 0.1
+attention_heads: 4
+augmentation_rotation: 20.0
+augmentation_start_rotation: 5.0
+augmentation_start_translation: 0.02
+augmentation_translation: 0.1
+augmentation_warmup_epochs: 15
+auxiliary_pose_weight: 0.0
+batch_size: 4
+cache_progress_interval: 10
+cbct_cache_points: 131072
+cbct_roi_min_points: 8192
+cbct_roi_relative_z:
+  lower:
+  - 0.0
+  - 1.0
+  upper:
+  - 0.08
+  - 1.0
+cbct_scale_mode:
+  lower: sampled
+  upper: full
+cbct_surface_only: true
+cbct_threshold: 800
+correspondence_coordinate_weight: 1.0
+correspondence_loss_weight: 0.1
+correspondence_radius_mm: 5.0
+cudnn_benchmark: true
+device: cuda
+direct_translation_range: 2.0
+ema_decay: 0.995
+epochs: 200
+experiment_name: lower_jaw_independent_paired_svd_v13
+experiment_names:
+  lower: lower_jaw_independent_paired_svd_v13
+  upper: upper_jaw_independent_paired_svd_v13
+feature_dim: 128
+gradient_clip_norm: 5.0
+internal_val_fraction: 0.2
+internal_val_seed: 2026
+internal_val_split_mode: chirality_stratified
+jaw_type: lower
+learning_rate: 0.0001
+load_pretrained: true
+load_registration_initialization: false
+loss_weights:
+  point: 1.0
+  rotation: 2.0
+  translation: 0.02
+match_temperature: 0.07
+minimum_learning_rate: 1.0e-06
+num_points_cbct: 8192
+num_points_stl: 4096
+num_workers: 8
+output_dir: ./experiments22
+persistent_workers: true
+pin_memory: true
+point_cache_dir: ./point_cache
+prefetch_factor: 4
+prepare_point_cache_before_training: true
+pretrained_checkpoints:
+  lower: ./experiments1/lower_jaw_pretrain_v1/checkpoints/best_model.pth
+  upper: ./experiments1/upper_jaw_pretrain_v1/checkpoints/best_model.pth
+rebuild_point_cache: false
+registration_head: cross_attention_svd
+robust_matching: true
+stl_cache_points: 32768
+target_dense_points: 1024
+target_saliency_focal_gamma: 2.0
+target_saliency_loss_weight: 0.0
+target_saliency_negative_radius_mm: 10.0
+target_saliency_positive_radius_mm: 5.0
+target_saliency_prior_weight: 0.0
+train_data_root: /mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Train-Labeled
+training_seed: 2026
+translation_residual_detach_features: true
+translation_residual_hidden_dim: 32
+translation_residual_loss_weight: 1.0
+translation_residual_range: 0.2
+use_anatomical_cbct_roi: true
+use_bf16: true
+use_ema: true
+use_internal_validation: true
+use_paired_jaw_auxiliary_training:
+  lower: true
+  upper: false
+use_point_cache: true
+val_data_root: /mnt/sata1/lzh/MICCAI-Chllenge-STS26-Task2/Validation
+val_score_weights:
+  rotation: 0.1
+  translation: 0.1
+validation_interval: 2
+weight_decay: 0.0001
+
+anatomical CBCT ROI: jaw=lower, relative_z=[0.0, 1.0], center=full_threshold_cloud, scale=sampled_target_cloud
+use device: cuda
+GPU: NVIDIA GeForce RTX 4090 D | batch_size=4 | BF16=True | TF32=True
+loss weights: {'point': 1.0, 'rotation': 2.0, 'translation': 0.02}
+validation score weights: translation=0.1, rotation=0.1
+loaded pretrained encoders from: ./experiments1/lower_jaw_pretrain_v1/checkpoints/best_model.pth
+EMA validation enabled: decay=0.995
+preparing point cache under: point_cache
+  cache 1/30: case=003
+  cache 11/30: case=116
+  cache 21/30: case=264
+  cache 30/30: case=321
+using internal validation split: mode=chirality_stratified, train=24, val=6, seed=2026
+held-out split groups (2): det=-1:2, det=+1:4
+preparing paired-jaw auxiliary cache: jaw=upper, samples=24
+paired-jaw auxiliary training enabled: primary_jaw=lower (24), auxiliary_jaw=upper (24), total=48; validation remains lower-only
+validation labels found in Train-Labeled via internal split
+Epoch 1/200 | Train Loss: 7.610086 (point=0.168170, rot=1.417096 rad, trans=159.219616 mm, corr=7.166167, sal=0.000000, base_trans=159.304 mm, tres=0.145 mm, tres_loss=0.7067, valid=0.5852, hand=1.0000) | Val Loss: 6.417806 | Val Metric: trans=144.623077 mm, rot=85.426282 deg, base_trans=144.832 mm, tres=0.287 mm, sal=0.000000, hand=1.0000, score=23.004936 | Time: 3.43s | Total Time: 3.43s
+  -> Save best model, validation score: 23.004936 (trans=144.623077 mm, rot=85.426282 deg, hand=1.0000)
+  -> Save best translation model, trans=144.623077 mm, rot=85.426282 deg
+  -> Save best rotation model, trans=144.623077 mm, rot=85.426282 deg
+Epoch 2/200 | Train Loss: 4.580103 (point=0.105459, rot=0.935348 rad, trans=81.003445 mm, corr=6.095903, sal=0.000000, base_trans=81.252 mm, tres=0.468 mm, tres_loss=0.3743, valid=0.5846, hand=1.0000) | Val Loss: 5.391721 | Val Metric: trans=111.566256 mm, rot=69.319864 deg, base_trans=111.904 mm, tres=0.594 mm, sal=0.000000, hand=1.0000, score=18.088612 | Time: 1.98s | Total Time: 5.47s
+  -> Save best model, validation score: 18.088612 (trans=111.566256 mm, rot=69.319864 deg, hand=1.0000)
+  -> Save best translation model, trans=111.566256 mm, rot=69.319864 deg
+  -> Save best rotation model, trans=111.566256 mm, rot=69.319864 deg
+Epoch 3/200 | Train Loss: 4.202974 (point=0.073290, rot=0.856529 rad, trans=74.346630 mm, corr=5.839398, sal=0.000000, base_trans=74.611 mm, tres=0.810 mm, tres_loss=0.3458, valid=0.5856, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 7.18s
+Epoch 4/200 | Train Loss: 3.782561 (point=0.055084, rot=0.694780 rad, trans=72.824195 mm, corr=5.773496, sal=0.000000, base_trans=73.250 mm, tres=1.061 mm, tres_loss=0.3041, valid=0.5909, hand=1.0000) | Val Loss: 5.112222 | Val Metric: trans=115.796183 mm, rot=65.493839 deg, base_trans=116.391 mm, tres=1.111 mm, sal=0.000000, hand=1.0000, score=18.129002 | Time: 1.95s | Total Time: 9.15s
+  -> Save best rotation model, trans=115.796183 mm, rot=65.493839 deg
+Epoch 5/200 | Train Loss: 3.748375 (point=0.043171, rot=0.620273 rad, trans=78.591299 mm, corr=5.771176, sal=0.000000, base_trans=79.079 mm, tres=1.284 mm, tres_loss=0.3157, valid=0.5808, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 10.83s
+Epoch 6/200 | Train Loss: 3.354401 (point=0.034292, rot=0.533688 rad, trans=70.193414 mm, corr=5.711310, sal=0.000000, base_trans=70.718 mm, tres=1.625 mm, tres_loss=0.2777, valid=0.5841, hand=1.0000) | Val Loss: 3.901084 | Val Metric: trans=93.291089 mm, rot=49.216815 deg, base_trans=93.996 mm, tres=1.666 mm, sal=0.000000, hand=1.0000, score=14.250790 | Time: 1.97s | Total Time: 12.81s
+  -> Save best model, validation score: 14.250790 (trans=93.291089 mm, rot=49.216815 deg, hand=1.0000)
+  -> Save best translation model, trans=93.291089 mm, rot=49.216815 deg
+  -> Save best rotation model, trans=93.291089 mm, rot=49.216815 deg
+Epoch 7/200 | Train Loss: 2.813257 (point=0.021260, rot=0.426132 rad, trans=57.691798 mm, corr=5.666619, sal=0.000000, base_trans=58.160 mm, tres=1.798 mm, tres_loss=0.2192, valid=0.5839, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 14.54s
+Epoch 8/200 | Train Loss: 2.444036 (point=0.018654, rot=0.369134 rad, trans=46.491251 mm, corr=5.674975, sal=0.000000, base_trans=47.002 mm, tres=1.905 mm, tres_loss=0.1898, valid=0.5863, hand=1.0000) | Val Loss: 2.008126 | Val Metric: trans=69.464035 mm, rot=23.875231 deg, base_trans=70.047 mm, tres=1.929 mm, sal=0.000000, hand=1.0000, score=9.333927 | Time: 1.94s | Total Time: 16.50s
+  -> Save best model, validation score: 9.333927 (trans=69.464035 mm, rot=23.875231 deg, hand=1.0000)
+  -> Save best translation model, trans=69.464035 mm, rot=23.875231 deg
+  -> Save best rotation model, trans=69.464035 mm, rot=23.875231 deg
+Epoch 9/200 | Train Loss: 2.466090 (point=0.018266, rot=0.361544 rad, trans=48.683235 mm, corr=5.586925, sal=0.000000, base_trans=49.442 mm, tres=2.066 mm, tres_loss=0.1924, valid=0.5817, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 18.20s
+Epoch 10/200 | Train Loss: 2.581100 (point=0.016230, rot=0.361572 rad, trans=53.734809 mm, corr=5.587689, sal=0.000000, base_trans=54.183 mm, tres=2.351 mm, tres_loss=0.2083, valid=0.5899, hand=1.0000) | Val Loss: 1.829032 | Val Metric: trans=73.286115 mm, rot=20.576206 deg, base_trans=74.059 mm, tres=2.202 mm, sal=0.000000, hand=1.0000, score=9.386232 | Time: 2.03s | Total Time: 20.25s
+  -> Save best rotation model, trans=73.286115 mm, rot=20.576206 deg
+Epoch 11/200 | Train Loss: 2.179667 (point=0.015283, rot=0.303013 rad, trans=41.727285 mm, corr=5.552998, sal=0.000000, base_trans=42.084 mm, tres=2.358 mm, tres_loss=0.1685, valid=0.5840, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.86s | Total Time: 22.16s
+Epoch 12/200 | Train Loss: 2.377690 (point=0.014869, rot=0.316549 rad, trans=49.498574 mm, corr=5.527856, sal=0.000000, base_trans=50.126 mm, tres=2.390 mm, tres_loss=0.1870, valid=0.5879, hand=1.0000) | Val Loss: 1.867270 | Val Metric: trans=67.689243 mm, rot=21.522802 deg, base_trans=68.653 mm, tres=2.283 mm, sal=0.000000, hand=1.0000, score=8.921205 | Time: 2.18s | Total Time: 24.37s
+  -> Save best model, validation score: 8.921205 (trans=67.689243 mm, rot=21.522802 deg, hand=1.0000)
+  -> Save best translation model, trans=67.689243 mm, rot=21.522802 deg
+Epoch 13/200 | Train Loss: 2.217572 (point=0.016648, rot=0.291836 rad, trans=44.728203 mm, corr=5.588176, sal=0.000000, base_trans=45.610 mm, tres=2.542 mm, tres_loss=0.1639, valid=0.5859, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.91s | Total Time: 26.35s
+Epoch 14/200 | Train Loss: 2.075073 (point=0.012937, rot=0.278188 rad, trans=40.293597 mm, corr=5.480445, sal=0.000000, base_trans=40.664 mm, tres=2.760 mm, tres_loss=0.1518, valid=0.5854, hand=1.0000) | Val Loss: 1.605924 | Val Metric: trans=61.341274 mm, rot=17.749194 deg, base_trans=62.373 mm, tres=2.608 mm, sal=0.000000, hand=1.0000, score=7.909047 | Time: 2.02s | Total Time: 28.40s
+  -> Save best model, validation score: 7.909047 (trans=61.341274 mm, rot=17.749194 deg, hand=1.0000)
+  -> Save best translation model, trans=61.341274 mm, rot=17.749194 deg
+  -> Save best rotation model, trans=61.341274 mm, rot=17.749194 deg
+Epoch 15/200 | Train Loss: 2.195985 (point=0.014419, rot=0.286280 rad, trans=44.459586 mm, corr=5.473776, sal=0.000000, base_trans=45.008 mm, tres=2.683 mm, tres_loss=0.1724, valid=0.5883, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 30.19s
+Epoch 16/200 | Train Loss: 2.373334 (point=0.014936, rot=0.313710 rad, trans=49.649086 mm, corr=5.469387, sal=0.000000, base_trans=50.676 mm, tres=2.788 mm, tres_loss=0.1911, valid=0.5878, hand=1.0000) | Val Loss: 2.193496 | Val Metric: trans=59.913207 mm, rot=26.127405 deg, base_trans=60.563 mm, tres=2.690 mm, sal=0.000000, hand=1.0000, score=8.604061 | Time: 1.97s | Total Time: 32.18s
+  -> Save best translation model, trans=59.913207 mm, rot=26.127405 deg
+Epoch 17/200 | Train Loss: 2.098703 (point=0.013493, rot=0.273027 rad, trans=41.517464 mm, corr=5.484558, sal=0.000000, base_trans=42.305 mm, tres=3.073 mm, tres_loss=0.1604, valid=0.5856, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.62s | Total Time: 33.83s
+Epoch 18/200 | Train Loss: 2.152922 (point=0.013272, rot=0.289494 rad, trans=42.741614 mm, corr=5.408442, sal=0.000000, base_trans=43.125 mm, tres=3.247 mm, tres_loss=0.1650, valid=0.5796, hand=1.0000) | Val Loss: 1.697130 | Val Metric: trans=55.237245 mm, rot=20.114166 deg, base_trans=56.088 mm, tres=2.964 mm, sal=0.000000, hand=1.0000, score=7.535141 | Time: 1.94s | Total Time: 35.79s
+  -> Save best model, validation score: 7.535141 (trans=55.237245 mm, rot=20.114166 deg, hand=1.0000)
+  -> Save best translation model, trans=55.237245 mm, rot=20.114166 deg
+Epoch 19/200 | Train Loss: 2.123086 (point=0.014811, rot=0.292285 rad, trans=40.591607 mm, corr=5.426386, sal=0.000000, base_trans=41.006 mm, tres=3.355 mm, tres_loss=0.1692, valid=0.5876, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 37.51s
+Epoch 20/200 | Train Loss: 2.175319 (point=0.012796, rot=0.286811 rad, trans=43.883185 mm, corr=5.376740, sal=0.000000, base_trans=44.846 mm, tres=3.474 mm, tres_loss=0.1736, valid=0.5861, hand=1.0000) | Val Loss: 1.647109 | Val Metric: trans=55.276562 mm, rot=18.813594 deg, base_trans=56.208 mm, tres=3.182 mm, sal=0.000000, hand=1.0000, score=7.409016 | Time: 2.01s | Total Time: 39.55s
+  -> Save best model, validation score: 7.409016 (trans=55.276562 mm, rot=18.813594 deg, hand=1.0000)
+Epoch 21/200 | Train Loss: 2.065888 (point=0.013208, rot=0.262046 rad, trans=41.565360 mm, corr=5.362006, sal=0.000000, base_trans=42.712 mm, tres=3.681 mm, tres_loss=0.1611, valid=0.5855, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 41.29s
+Epoch 22/200 | Train Loss: 1.940151 (point=0.013247, rot=0.256653 rad, trans=36.125712 mm, corr=5.382389, sal=0.000000, base_trans=36.574 mm, tres=3.867 mm, tres_loss=0.1528, valid=0.5845, hand=1.0000) | Val Loss: 1.469729 | Val Metric: trans=50.832490 mm, rot=16.325911 deg, base_trans=52.095 mm, tres=3.510 mm, sal=0.000000, hand=1.0000, score=6.715840 | Time: 1.92s | Total Time: 43.24s
+  -> Save best model, validation score: 6.715840 (trans=50.832490 mm, rot=16.325911 deg, hand=1.0000)
+  -> Save best translation model, trans=50.832490 mm, rot=16.325911 deg
+  -> Save best rotation model, trans=50.832490 mm, rot=16.325911 deg
+Epoch 23/200 | Train Loss: 1.788895 (point=0.012494, rot=0.228432 rad, trans=32.656628 mm, corr=5.340406, sal=0.000000, base_trans=33.459 mm, tres=3.848 mm, tres_loss=0.1324, valid=0.5872, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.76s | Total Time: 45.06s
+Epoch 24/200 | Train Loss: 1.825184 (point=0.011537, rot=0.217902 rad, trans=35.339412 mm, corr=5.288334, sal=0.000000, base_trans=35.670 mm, tres=3.773 mm, tres_loss=0.1422, valid=0.5859, hand=1.0000) | Val Loss: 1.399102 | Val Metric: trans=51.002012 mm, rot=15.648724 deg, base_trans=51.915 mm, tres=3.551 mm, sal=0.000000, hand=1.0000, score=6.665074 | Time: 1.98s | Total Time: 47.05s
+  -> Save best model, validation score: 6.665074 (trans=51.002012 mm, rot=15.648724 deg, hand=1.0000)
+  -> Save best rotation model, trans=51.002012 mm, rot=15.648724 deg
+Epoch 25/200 | Train Loss: 1.689919 (point=0.012052, rot=0.218394 rad, trans=29.474559 mm, corr=5.319107, sal=0.000000, base_trans=29.987 mm, tres=3.708 mm, tres_loss=0.1197, valid=0.5876, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.80s | Total Time: 48.90s
+Epoch 26/200 | Train Loss: 1.664644 (point=0.011189, rot=0.222385 rad, trans=28.575037 mm, corr=5.215238, sal=0.000000, base_trans=29.387 mm, tres=3.803 mm, tres_loss=0.1157, valid=0.5835, hand=1.0000) | Val Loss: 1.428886 | Val Metric: trans=45.525535 mm, rot=17.274403 deg, base_trans=45.787 mm, tres=3.572 mm, sal=0.000000, hand=1.0000, score=6.279994 | Time: 1.95s | Total Time: 50.86s
+  -> Save best model, validation score: 6.279994 (trans=45.525535 mm, rot=17.274403 deg, hand=1.0000)
+  -> Save best translation model, trans=45.525535 mm, rot=17.274403 deg
+Epoch 27/200 | Train Loss: 1.694148 (point=0.011216, rot=0.225649 rad, trans=29.434080 mm, corr=5.276774, sal=0.000000, base_trans=30.520 mm, tres=3.924 mm, tres_loss=0.1153, valid=0.5842, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 52.59s
+Epoch 28/200 | Train Loss: 1.829516 (point=0.011697, rot=0.224884 rad, trans=35.276905 mm, corr=5.274634, sal=0.000000, base_trans=35.539 mm, tres=3.939 mm, tres_loss=0.1350, valid=0.5863, hand=1.0000) | Val Loss: 1.421436 | Val Metric: trans=45.306511 mm, rot=16.922319 deg, base_trans=45.481 mm, tres=3.641 mm, sal=0.000000, hand=1.0000, score=6.222883 | Time: 2.04s | Total Time: 54.65s
+  -> Save best model, validation score: 6.222883 (trans=45.306511 mm, rot=16.922319 deg, hand=1.0000)
+  -> Save best translation model, trans=45.306511 mm, rot=16.922319 deg
+Epoch 29/200 | Train Loss: 2.042044 (point=0.011585, rot=0.235444 rad, trans=43.218942 mm, corr=5.336557, sal=0.000000, base_trans=44.597 mm, tres=3.914 mm, tres_loss=0.1615, valid=0.5826, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 56.41s
+Epoch 30/200 | Train Loss: 1.804718 (point=0.011585, rot=0.230926 rad, trans=33.343537 mm, corr=5.318725, sal=0.000000, base_trans=34.133 mm, tres=4.122 mm, tres_loss=0.1325, valid=0.5841, hand=1.0000) | Val Loss: 1.527981 | Val Metric: trans=42.866461 mm, rot=18.962059 deg, base_trans=43.839 mm, tres=3.695 mm, sal=0.000000, hand=1.0000, score=6.182852 | Time: 1.93s | Total Time: 58.35s
+  -> Save best model, validation score: 6.182852 (trans=42.866461 mm, rot=18.962059 deg, hand=1.0000)
+  -> Save best translation model, trans=42.866461 mm, rot=18.962059 deg
+Epoch 31/200 | Train Loss: 1.744607 (point=0.011934, rot=0.232715 rad, trans=30.965492 mm, corr=5.289111, sal=0.000000, base_trans=31.875 mm, tres=4.209 mm, tres_loss=0.1190, valid=0.5926, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 60.07s
+Epoch 32/200 | Train Loss: 1.885641 (point=0.011650, rot=0.222638 rad, trans=37.833756 mm, corr=5.230978, sal=0.000000, base_trans=38.894 mm, tres=4.277 mm, tres_loss=0.1489, valid=0.5865, hand=1.0000) | Val Loss: 1.405129 | Val Metric: trans=45.161246 mm, rot=16.570515 deg, base_trans=45.844 mm, tres=3.851 mm, sal=0.000000, hand=1.0000, score=6.173176 | Time: 1.92s | Total Time: 62.01s
+  -> Save best model, validation score: 6.173176 (trans=45.161246 mm, rot=16.570515 deg, hand=1.0000)
+Epoch 33/200 | Train Loss: 1.832396 (point=0.010692, rot=0.230125 rad, trans=34.928498 mm, corr=5.248052, sal=0.000000, base_trans=35.536 mm, tres=4.308 mm, tres_loss=0.1381, valid=0.5890, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 63.70s
+Epoch 34/200 | Train Loss: 1.745127 (point=0.011427, rot=0.214840 rad, trans=32.651907 mm, corr=5.279694, sal=0.000000, base_trans=33.054 mm, tres=4.140 mm, tres_loss=0.1230, valid=0.5852, hand=1.0000) | Val Loss: 1.187027 | Val Metric: trans=37.833313 mm, rot=14.458656 deg, base_trans=37.923 mm, tres=3.864 mm, sal=0.000000, hand=1.0000, score=5.229197 | Time: 2.01s | Total Time: 65.73s
+  -> Save best model, validation score: 5.229197 (trans=37.833313 mm, rot=14.458656 deg, hand=1.0000)
+  -> Save best translation model, trans=37.833313 mm, rot=14.458656 deg
+  -> Save best rotation model, trans=37.833313 mm, rot=14.458656 deg
+Epoch 35/200 | Train Loss: 1.798493 (point=0.010801, rot=0.224086 rad, trans=34.226958 mm, corr=5.251782, sal=0.000000, base_trans=35.343 mm, tres=3.918 mm, tres_loss=0.1298, valid=0.5870, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 67.47s
+Epoch 36/200 | Train Loss: 1.804930 (point=0.010936, rot=0.215519 rad, trans=35.321259 mm, corr=5.196754, sal=0.000000, base_trans=35.629 mm, tres=4.260 mm, tres_loss=0.1369, valid=0.5886, hand=1.0000) | Val Loss: 1.403203 | Val Metric: trans=48.172414 mm, rot=15.862906 deg, base_trans=48.710 mm, tres=3.871 mm, sal=0.000000, hand=1.0000, score=6.403532 | Time: 1.95s | Total Time: 69.44s
+Epoch 37/200 | Train Loss: 1.750235 (point=0.011226, rot=0.216792 rad, trans=32.475119 mm, corr=5.243505, sal=0.000000, base_trans=33.299 mm, tres=4.214 mm, tres_loss=0.1316, valid=0.5866, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 71.13s
+Epoch 38/200 | Train Loss: 1.712369 (point=0.010739, rot=0.208359 rad, trans=31.719160 mm, corr=5.214396, sal=0.000000, base_trans=32.841 mm, tres=4.083 mm, tres_loss=0.1291, valid=0.5854, hand=1.0000) | Val Loss: 1.422592 | Val Metric: trans=47.440366 mm, rot=16.401276 deg, base_trans=47.713 mm, tres=3.787 mm, sal=0.000000, hand=1.0000, score=6.384164 | Time: 1.94s | Total Time: 73.08s
+Epoch 39/200 | Train Loss: 1.597913 (point=0.010654, rot=0.183477 rad, trans=29.193033 mm, corr=5.155905, sal=0.000000, base_trans=29.762 mm, tres=3.918 mm, tres_loss=0.1209, valid=0.5867, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 74.81s
+Epoch 40/200 | Train Loss: 1.719483 (point=0.010244, rot=0.204002 rad, trans=32.848975 mm, corr=5.210323, sal=0.000000, base_trans=33.916 mm, tres=4.327 mm, tres_loss=0.1232, valid=0.5852, hand=1.0000) | Val Loss: 1.363819 | Val Metric: trans=45.070582 mm, rot=15.723742 deg, base_trans=45.474 mm, tres=3.733 mm, sal=0.000000, hand=1.0000, score=6.079432 | Time: 2.13s | Total Time: 76.96s
+Epoch 41/200 | Train Loss: 1.639596 (point=0.010813, rot=0.204732 rad, trans=29.114908 mm, corr=5.211541, sal=0.000000, base_trans=30.010 mm, tres=4.262 mm, tres_loss=0.1159, valid=0.5888, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 78.65s
+Epoch 42/200 | Train Loss: 1.740489 (point=0.010343, rot=0.188833 rad, trans=34.768679 mm, corr=5.203814, sal=0.000000, base_trans=35.726 mm, tres=4.244 mm, tres_loss=0.1367, valid=0.5878, hand=1.0000) | Val Loss: 1.369250 | Val Metric: trans=37.919545 mm, rot=16.914851 deg, base_trans=37.824 mm, tres=3.673 mm, sal=0.000000, hand=1.0000, score=5.483440 | Time: 1.93s | Total Time: 80.60s
+Epoch 43/200 | Train Loss: 1.437796 (point=0.010305, rot=0.169984 rad, trans=23.533237 mm, corr=5.208038, sal=0.000000, base_trans=24.784 mm, tres=4.475 mm, tres_loss=0.0961, valid=0.5865, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 82.29s
+Epoch 44/200 | Train Loss: 1.802794 (point=0.011608, rot=0.208498 rad, trans=35.895589 mm, corr=5.203304, sal=0.000000, base_trans=36.908 mm, tres=4.924 mm, tres_loss=0.1359, valid=0.5900, hand=1.0000) | Val Loss: 1.333293 | Val Metric: trans=38.051718 mm, rot=16.424606 deg, base_trans=37.654 mm, tres=3.890 mm, sal=0.000000, hand=1.0000, score=5.447632 | Time: 1.94s | Total Time: 84.25s
+Epoch 45/200 | Train Loss: 1.632952 (point=0.010114, rot=0.185922 rad, trans=30.645029 mm, corr=5.174988, sal=0.000000, base_trans=30.842 mm, tres=4.788 mm, tres_loss=0.1206, valid=0.5847, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 85.93s
+Epoch 46/200 | Train Loss: 1.705939 (point=0.009287, rot=0.191397 rad, trans=33.561941 mm, corr=5.147327, sal=0.000000, base_trans=33.830 mm, tres=4.179 mm, tres_loss=0.1279, valid=0.5871, hand=1.0000) | Val Loss: 1.578688 | Val Metric: trans=50.430808 mm, rot=16.923392 deg, base_trans=49.549 mm, tres=3.972 mm, sal=0.000000, hand=1.0000, score=6.735420 | Time: 1.99s | Total Time: 87.94s
+Epoch 47/200 | Train Loss: 1.786970 (point=0.011019, rot=0.204124 rad, trans=35.343997 mm, corr=5.201692, sal=0.000000, base_trans=35.887 mm, tres=3.530 mm, tres_loss=0.1407, valid=0.5874, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 89.64s
+Epoch 48/200 | Train Loss: 1.484481 (point=0.010221, rot=0.170925 rad, trans=25.489516 mm, corr=5.199602, sal=0.000000, base_trans=26.477 mm, tres=3.723 mm, tres_loss=0.1027, valid=0.5869, hand=1.0000) | Val Loss: 1.435561 | Val Metric: trans=35.852416 mm, rot=17.653517 deg, base_trans=35.565 mm, tres=3.882 mm, sal=0.000000, hand=1.0000, score=5.350593 | Time: 1.94s | Total Time: 91.60s
+  -> Save best translation model, trans=35.852416 mm, rot=17.653517 deg
+Epoch 49/200 | Train Loss: 1.677413 (point=0.009756, rot=0.185100 rad, trans=32.870612 mm, corr=5.172476, sal=0.000000, base_trans=34.011 mm, tres=4.375 mm, tres_loss=0.1228, valid=0.5840, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 93.30s
+Epoch 50/200 | Train Loss: 1.529923 (point=0.009762, rot=0.171816 rad, trans=27.907757 mm, corr=5.096308, sal=0.000000, base_trans=28.925 mm, tres=4.573 mm, tres_loss=0.1087, valid=0.5843, hand=1.0000) | Val Loss: 1.417526 | Val Metric: trans=40.455954 mm, rot=16.590233 deg, base_trans=40.669 mm, tres=3.883 mm, sal=0.000000, hand=1.0000, score=5.704619 | Time: 1.96s | Total Time: 95.28s
+Epoch 51/200 | Train Loss: 1.723757 (point=0.009646, rot=0.188822 rad, trans=34.796189 mm, corr=5.133159, sal=0.000000, base_trans=35.722 mm, tres=4.809 mm, tres_loss=0.1272, valid=0.5885, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 97.00s
+Epoch 52/200 | Train Loss: 1.601602 (point=0.009618, rot=0.180693 rad, trans=29.839690 mm, corr=5.149473, sal=0.000000, base_trans=31.364 mm, tres=4.822 mm, tres_loss=0.1189, valid=0.5837, hand=1.0000) | Val Loss: 1.419355 | Val Metric: trans=39.021347 mm, rot=17.190843 deg, base_trans=39.656 mm, tres=4.015 mm, sal=0.000000, hand=1.0000, score=5.621219 | Time: 1.99s | Total Time: 99.01s
+Epoch 53/200 | Train Loss: 1.597339 (point=0.009285, rot=0.183650 rad, trans=29.476025 mm, corr=5.128973, sal=0.000000, base_trans=30.771 mm, tres=4.903 mm, tres_loss=0.1183, valid=0.5871, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.66s | Total Time: 100.69s
+Epoch 54/200 | Train Loss: 1.652619 (point=0.009469, rot=0.186498 rad, trans=31.797242 mm, corr=5.153220, sal=0.000000, base_trans=33.066 mm, tres=4.975 mm, tres_loss=0.1189, valid=0.5823, hand=1.0000) | Val Loss: 1.461730 | Val Metric: trans=39.361998 mm, rot=17.380339 deg, base_trans=40.466 mm, tres=4.109 mm, sal=0.000000, hand=1.0000, score=5.674234 | Time: 1.95s | Total Time: 102.67s
+Epoch 55/200 | Train Loss: 1.683269 (point=0.009645, rot=0.185054 rad, trans=33.225048 mm, corr=5.119174, sal=0.000000, base_trans=34.042 mm, tres=4.872 mm, tres_loss=0.1271, valid=0.5896, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 104.39s
+Epoch 56/200 | Train Loss: 1.584080 (point=0.008893, rot=0.166795 rad, trans=30.689736 mm, corr=5.061924, sal=0.000000, base_trans=31.765 mm, tres=4.814 mm, tres_loss=0.1216, valid=0.5871, hand=1.0000) | Val Loss: 1.551552 | Val Metric: trans=40.739328 mm, rot=18.635969 deg, base_trans=40.496 mm, tres=4.219 mm, sal=0.000000, hand=1.0000, score=5.937530 | Time: 2.21s | Total Time: 106.62s
+Epoch 57/200 | Train Loss: 1.660016 (point=0.009836, rot=0.197472 rad, trans=31.299278 mm, corr=5.121413, sal=0.000000, base_trans=32.546 mm, tres=4.889 mm, tres_loss=0.1171, valid=0.5838, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 108.36s
+Epoch 58/200 | Train Loss: 1.530222 (point=0.008908, rot=0.180557 rad, trans=27.063927 mm, corr=5.098065, sal=0.000000, base_trans=27.973 mm, tres=4.913 mm, tres_loss=0.1091, valid=0.5862, hand=1.0000) | Val Loss: 1.448741 | Val Metric: trans=37.921990 mm, rot=17.401459 deg, base_trans=38.913 mm, tres=4.221 mm, sal=0.000000, hand=1.0000, score=5.532345 | Time: 2.07s | Total Time: 110.45s
+Epoch 59/200 | Train Loss: 1.469304 (point=0.009305, rot=0.157804 rad, trans=26.501256 mm, corr=5.129696, sal=0.000000, base_trans=27.286 mm, tres=4.879 mm, tres_loss=0.1014, valid=0.5852, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 112.15s
+Epoch 60/200 | Train Loss: 1.503527 (point=0.008713, rot=0.176634 rad, trans=26.309766 mm, corr=5.108335, sal=0.000000, base_trans=27.556 mm, tres=4.850 mm, tres_loss=0.1045, valid=0.5895, hand=1.0000) | Val Loss: 1.412436 | Val Metric: trans=37.824834 mm, rot=16.851549 deg, base_trans=38.560 mm, tres=4.319 mm, sal=0.000000, hand=1.0000, score=5.467638 | Time: 1.94s | Total Time: 114.10s
+Epoch 61/200 | Train Loss: 1.464094 (point=0.009031, rot=0.152420 rad, trans=26.705762 mm, corr=5.107563, sal=0.000000, base_trans=28.064 mm, tres=4.910 mm, tres_loss=0.1054, valid=0.5869, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.74s | Total Time: 115.86s
+Epoch 62/200 | Train Loss: 1.607482 (point=0.009755, rot=0.187858 rad, trans=29.461485 mm, corr=5.144244, sal=0.000000, base_trans=30.437 mm, tres=5.098 mm, tres_loss=0.1184, valid=0.5894, hand=1.0000) | Val Loss: 1.362424 | Val Metric: trans=32.286184 mm, rot=16.833506 deg, base_trans=33.731 mm, tres=4.334 mm, sal=0.000000, hand=1.0000, score=4.911969 | Time: 1.94s | Total Time: 117.82s
+  -> Save best model, validation score: 4.911969 (trans=32.286184 mm, rot=16.833506 deg, hand=1.0000)
+  -> Save best translation model, trans=32.286184 mm, rot=16.833506 deg
+Epoch 63/200 | Train Loss: 1.537209 (point=0.008308, rot=0.164850 rad, trans=29.037568 mm, corr=5.069795, sal=0.000000, base_trans=30.537 mm, tres=5.123 mm, tres_loss=0.1115, valid=0.5875, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 119.55s
+Epoch 64/200 | Train Loss: 1.623873 (point=0.009578, rot=0.179867 rad, trans=31.194356 mm, corr=5.074716, sal=0.000000, base_trans=32.702 mm, tres=5.282 mm, tres_loss=0.1232, valid=0.5885, hand=1.0000) | Val Loss: 1.412855 | Val Metric: trans=40.644604 mm, rot=16.314935 deg, base_trans=40.902 mm, tres=4.370 mm, sal=0.000000, hand=1.0000, score=5.695954 | Time: 1.93s | Total Time: 121.50s
+Epoch 65/200 | Train Loss: 1.675850 (point=0.009707, rot=0.190770 rad, trans=32.655759 mm, corr=5.060594, sal=0.000000, base_trans=33.729 mm, tres=5.492 mm, tres_loss=0.1254, valid=0.5865, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.66s | Total Time: 123.18s
+Epoch 66/200 | Train Loss: 1.825253 (point=0.009722, rot=0.208613 rad, trans=37.154363 mm, corr=5.088445, sal=0.000000, base_trans=38.699 mm, tres=5.329 mm, tres_loss=0.1464, valid=0.5868, hand=1.0000) | Val Loss: 1.472381 | Val Metric: trans=39.968282 mm, rot=17.170823 deg, base_trans=40.144 mm, tres=4.450 mm, sal=0.000000, hand=1.0000, score=5.713910 | Time: 1.97s | Total Time: 125.17s
+Epoch 67/200 | Train Loss: 1.521867 (point=0.009107, rot=0.168970 rad, trans=27.999648 mm, corr=5.060693, sal=0.000000, base_trans=29.565 mm, tres=5.190 mm, tres_loss=0.1088, valid=0.5870, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 126.87s
+Epoch 68/200 | Train Loss: 1.548194 (point=0.009276, rot=0.175359 rad, trans=28.555638 mm, corr=5.049668, sal=0.000000, base_trans=29.906 mm, tres=5.308 mm, tres_loss=0.1121, valid=0.5909, hand=1.0000) | Val Loss: 1.447660 | Val Metric: trans=36.821530 mm, rot=17.278950 deg, base_trans=36.631 mm, tres=4.488 mm, sal=0.000000, hand=1.0000, score=5.410048 | Time: 1.93s | Total Time: 128.82s
+Epoch 69/200 | Train Loss: 1.477181 (point=0.009063, rot=0.169935 rad, trans=25.998407 mm, corr=5.050010, sal=0.000000, base_trans=26.917 mm, tres=5.429 mm, tres_loss=0.1033, valid=0.5819, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 130.54s
+Epoch 70/200 | Train Loss: 1.539316 (point=0.009691, rot=0.174814 rad, trans=27.990018 mm, corr=5.055426, sal=0.000000, base_trans=29.813 mm, tres=5.439 mm, tres_loss=0.1147, valid=0.5844, hand=1.0000) | Val Loss: 1.394997 | Val Metric: trans=35.054221 mm, rot=17.143584 deg, base_trans=35.540 mm, tres=4.596 mm, sal=0.000000, hand=1.0000, score=5.219781 | Time: 1.94s | Total Time: 132.49s
+Epoch 71/200 | Train Loss: 1.662232 (point=0.009037, rot=0.187628 rad, trans=32.418010 mm, corr=5.052438, sal=0.000000, base_trans=32.899 mm, tres=5.717 mm, tres_loss=0.1243, valid=0.5839, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.85s | Total Time: 134.37s
+Epoch 72/200 | Train Loss: 1.350323 (point=0.008483, rot=0.132061 rad, trans=24.002714 mm, corr=5.030481, sal=0.000000, base_trans=24.803 mm, tres=5.569 mm, tres_loss=0.0946, valid=0.5898, hand=1.0000) | Val Loss: 1.484529 | Val Metric: trans=41.658595 mm, rot=17.588291 deg, base_trans=41.613 mm, tres=4.626 mm, sal=0.000000, hand=1.0000, score=5.924689 | Time: 2.11s | Total Time: 136.50s
+Epoch 73/200 | Train Loss: 1.536236 (point=0.008886, rot=0.170459 rad, trans=28.384452 mm, corr=5.066758, sal=0.000000, base_trans=29.839 mm, tres=5.394 mm, tres_loss=0.1121, valid=0.5885, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.79s | Total Time: 138.30s
+Epoch 74/200 | Train Loss: 1.481729 (point=0.008250, rot=0.170515 rad, trans=26.513900 mm, corr=5.035443, sal=0.000000, base_trans=27.675 mm, tres=5.405 mm, tres_loss=0.0986, valid=0.5887, hand=1.0000) | Val Loss: 1.476622 | Val Metric: trans=35.878018 mm, rot=17.987056 deg, base_trans=36.860 mm, tres=4.615 mm, sal=0.000000, hand=1.0000, score=5.386507 | Time: 2.19s | Total Time: 140.51s
+Epoch 75/200 | Train Loss: 1.557939 (point=0.008981, rot=0.166765 rad, trans=29.855759 mm, corr=5.013983, sal=0.000000, base_trans=31.377 mm, tres=5.371 mm, tres_loss=0.1169, valid=0.5847, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 142.22s
+Epoch 76/200 | Train Loss: 1.399515 (point=0.008581, rot=0.150300 rad, trans=24.785581 mm, corr=4.963743, sal=0.000000, base_trans=25.726 mm, tres=5.107 mm, tres_loss=0.0982, valid=0.5828, hand=1.0000) | Val Loss: 1.495152 | Val Metric: trans=37.106043 mm, rot=18.275719 deg, base_trans=37.625 mm, tres=4.660 mm, sal=0.000000, hand=1.0000, score=5.538176 | Time: 2.00s | Total Time: 144.24s
+Epoch 77/200 | Train Loss: 1.391644 (point=0.008926, rot=0.152401 rad, trans=23.945321 mm, corr=5.070298, sal=0.000000, base_trans=25.255 mm, tres=5.304 mm, tres_loss=0.0920, valid=0.5890, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 145.99s
+Epoch 78/200 | Train Loss: 1.450193 (point=0.008351, rot=0.159456 rad, trans=25.901326 mm, corr=5.022795, sal=0.000000, base_trans=26.620 mm, tres=5.597 mm, tres_loss=0.1026, valid=0.5833, hand=1.0000) | Val Loss: 1.321536 | Val Metric: trans=33.013793 mm, rot=16.417489 deg, base_trans=33.187 mm, tres=4.684 mm, sal=0.000000, hand=1.0000, score=4.943128 | Time: 2.16s | Total Time: 148.18s
+Epoch 79/200 | Train Loss: 1.578887 (point=0.009122, rot=0.153282 rad, trans=31.781807 mm, corr=5.058008, sal=0.000000, base_trans=33.154 mm, tres=5.433 mm, tres_loss=0.1218, valid=0.5851, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 149.93s
+Epoch 80/200 | Train Loss: 1.451135 (point=0.009017, rot=0.157984 rad, trans=25.970080 mm, corr=5.051914, sal=0.000000, base_trans=26.982 mm, tres=5.326 mm, tres_loss=0.1016, valid=0.5856, hand=1.0000) | Val Loss: 1.223794 | Val Metric: trans=33.749132 mm, rot=14.411920 deg, base_trans=34.779 mm, tres=4.700 mm, sal=0.000000, hand=1.0000, score=4.816105 | Time: 1.94s | Total Time: 151.89s
+  -> Save best model, validation score: 4.816105 (trans=33.749132 mm, rot=14.411920 deg, hand=1.0000)
+  -> Save best rotation model, trans=33.749132 mm, rot=14.411920 deg
+Epoch 81/200 | Train Loss: 1.385408 (point=0.008651, rot=0.156836 rad, trans=23.484164 mm, corr=5.032611, sal=0.000000, base_trans=24.929 mm, tres=5.489 mm, tres_loss=0.0901, valid=0.5848, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 153.61s
+Epoch 82/200 | Train Loss: 1.516160 (point=0.008979, rot=0.157915 rad, trans=28.593737 mm, corr=5.072621, sal=0.000000, base_trans=29.968 mm, tres=5.502 mm, tres_loss=0.1122, valid=0.5817, hand=1.0000) | Val Loss: 1.362840 | Val Metric: trans=34.868722 mm, rot=16.400496 deg, base_trans=34.947 mm, tres=4.751 mm, sal=0.000000, hand=1.0000, score=5.126922 | Time: 1.91s | Total Time: 155.54s
+Epoch 83/200 | Train Loss: 1.504178 (point=0.008556, rot=0.164545 rad, trans=27.730763 mm, corr=5.083182, sal=0.000000, base_trans=28.847 mm, tres=5.802 mm, tres_loss=0.1036, valid=0.5850, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.75s | Total Time: 157.31s
+Epoch 84/200 | Train Loss: 1.504024 (point=0.008334, rot=0.158365 rad, trans=28.292317 mm, corr=4.990868, sal=0.000000, base_trans=29.144 mm, tres=5.907 mm, tres_loss=0.1140, valid=0.5823, hand=1.0000) | Val Loss: 1.169698 | Val Metric: trans=31.143331 mm, rot=13.760703 deg, base_trans=32.414 mm, tres=4.842 mm, sal=0.000000, hand=1.0000, score=4.490403 | Time: 2.07s | Total Time: 159.40s
+  -> Save best model, validation score: 4.490403 (trans=31.143331 mm, rot=13.760703 deg, hand=1.0000)
+  -> Save best translation model, trans=31.143331 mm, rot=13.760703 deg
+  -> Save best rotation model, trans=31.143331 mm, rot=13.760703 deg
+Epoch 85/200 | Train Loss: 1.393765 (point=0.008565, rot=0.135562 rad, trans=25.549800 mm, corr=5.017323, sal=0.000000, base_trans=27.620 mm, tres=5.868 mm, tres_loss=0.1013, valid=0.5803, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.74s | Total Time: 161.20s
+Epoch 86/200 | Train Loss: 1.435399 (point=0.008320, rot=0.153472 rad, trans=26.147295 mm, corr=4.975085, sal=0.000000, base_trans=27.417 mm, tres=5.922 mm, tres_loss=0.0997, valid=0.5879, hand=1.0000) | Val Loss: 1.230443 | Val Metric: trans=31.605410 mm, rot=14.726284 deg, base_trans=33.449 mm, tres=4.873 mm, sal=0.000000, hand=1.0000, score=4.633169 | Time: 2.09s | Total Time: 163.31s
+Epoch 87/200 | Train Loss: 1.487598 (point=0.008640, rot=0.165336 rad, trans=27.171189 mm, corr=4.988651, sal=0.000000, base_trans=28.438 mm, tres=5.956 mm, tres_loss=0.1060, valid=0.5842, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 165.06s
+Epoch 88/200 | Train Loss: 1.405694 (point=0.008349, rot=0.153624 rad, trans=24.750925 mm, corr=4.993033, sal=0.000000, base_trans=26.043 mm, tres=5.854 mm, tres_loss=0.0958, valid=0.5869, hand=1.0000) | Val Loss: 1.236453 | Val Metric: trans=32.071621 mm, rot=14.741302 deg, base_trans=32.796 mm, tres=4.986 mm, sal=0.000000, hand=1.0000, score=4.681292 | Time: 1.91s | Total Time: 166.99s
+Epoch 89/200 | Train Loss: 1.268267 (point=0.008231, rot=0.147770 rad, trans=19.602165 mm, corr=4.948664, sal=0.000000, base_trans=21.377 mm, tres=5.838 mm, tres_loss=0.0776, valid=0.5818, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.66s | Total Time: 168.67s
+Epoch 90/200 | Train Loss: 1.401050 (point=0.008488, rot=0.152904 rad, trans=24.727345 mm, corr=4.955442, sal=0.000000, base_trans=25.940 mm, tres=5.849 mm, tres_loss=0.0967, valid=0.5809, hand=1.0000) | Val Loss: 1.394775 | Val Metric: trans=38.448791 mm, rot=15.782728 deg, base_trans=39.360 mm, tres=4.922 mm, sal=0.000000, hand=1.0000, score=5.423152 | Time: 1.97s | Total Time: 170.66s
+Epoch 91/200 | Train Loss: 1.313442 (point=0.008417, rot=0.141930 rad, trans=21.658517 mm, corr=4.988966, sal=0.000000, base_trans=22.829 mm, tres=5.965 mm, tres_loss=0.0891, valid=0.5871, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 172.42s
+Epoch 92/200 | Train Loss: 1.549289 (point=0.008192, rot=0.154935 rad, trans=31.042679 mm, corr=4.935232, sal=0.000000, base_trans=32.518 mm, tres=6.042 mm, tres_loss=0.1168, valid=0.5854, hand=1.0000) | Val Loss: 1.212262 | Val Metric: trans=29.629072 mm, rot=14.821474 deg, base_trans=30.027 mm, tres=4.954 mm, sal=0.000000, hand=1.0000, score=4.445055 | Time: 1.98s | Total Time: 174.42s
+  -> Save best model, validation score: 4.445055 (trans=29.629072 mm, rot=14.821474 deg, hand=1.0000)
+  -> Save best translation model, trans=29.629072 mm, rot=14.821474 deg
+Epoch 93/200 | Train Loss: 1.371576 (point=0.008002, rot=0.151134 rad, trans=23.700259 mm, corr=4.936157, sal=0.000000, base_trans=23.794 mm, tres=5.902 mm, tres_loss=0.0937, valid=0.5836, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 176.17s
+Epoch 94/200 | Train Loss: 1.311532 (point=0.008332, rot=0.147904 rad, trans=21.199595 mm, corr=4.970658, sal=0.000000, base_trans=22.294 mm, tres=5.848 mm, tres_loss=0.0863, valid=0.5894, hand=1.0000) | Val Loss: 1.290705 | Val Metric: trans=36.840069 mm, rot=14.630090 deg, base_trans=36.724 mm, tres=5.000 mm, sal=0.000000, hand=1.0000, score=5.147016 | Time: 1.98s | Total Time: 178.17s
+Epoch 95/200 | Train Loss: 1.350077 (point=0.008182, rot=0.135009 rad, trans=23.960703 mm, corr=4.969277, sal=0.000000, base_trans=25.313 mm, tres=5.734 mm, tres_loss=0.0957, valid=0.5831, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.75s | Total Time: 179.93s
+Epoch 96/200 | Train Loss: 1.459045 (point=0.008027, rot=0.150862 rad, trans=27.248004 mm, corr=4.966079, sal=0.000000, base_trans=28.310 mm, tres=5.600 mm, tres_loss=0.1077, valid=0.5871, hand=1.0000) | Val Loss: 1.120369 | Val Metric: trans=29.909197 mm, rot=13.604846 deg, base_trans=30.053 mm, tres=5.010 mm, sal=0.000000, hand=1.0000, score=4.351404 | Time: 2.03s | Total Time: 181.98s
+  -> Save best model, validation score: 4.351404 (trans=29.909197 mm, rot=13.604846 deg, hand=1.0000)
+  -> Save best rotation model, trans=29.909197 mm, rot=13.604846 deg
+Epoch 97/200 | Train Loss: 1.420182 (point=0.008187, rot=0.139118 rad, trans=26.815238 mm, corr=4.952104, sal=0.000000, base_trans=27.547 mm, tres=5.581 mm, tres_loss=0.1022, valid=0.5854, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 183.73s
+Epoch 98/200 | Train Loss: 1.406784 (point=0.008093, rot=0.149730 rad, trans=25.127435 mm, corr=4.995105, sal=0.000000, base_trans=26.855 mm, tres=5.615 mm, tres_loss=0.0972, valid=0.5843, hand=1.0000) | Val Loss: 1.380781 | Val Metric: trans=36.292056 mm, rot=15.716107 deg, base_trans=37.259 mm, tres=4.935 mm, sal=0.000000, hand=1.0000, score=5.200816 | Time: 1.99s | Total Time: 185.74s
+Epoch 99/200 | Train Loss: 1.329264 (point=0.007820, rot=0.133211 rad, trans=23.489561 mm, corr=4.940768, sal=0.000000, base_trans=25.353 mm, tres=5.561 mm, tres_loss=0.0912, valid=0.5843, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 187.41s
+Epoch 100/200 | Train Loss: 1.266216 (point=0.007780, rot=0.133538 rad, trans=20.750712 mm, corr=4.919219, sal=0.000000, base_trans=22.195 mm, tres=5.752 mm, tres_loss=0.0844, valid=0.5845, hand=1.0000) | Val Loss: 1.288956 | Val Metric: trans=34.158867 mm, rot=15.163253 deg, base_trans=34.171 mm, tres=4.967 mm, sal=0.000000, hand=1.0000, score=4.932212 | Time: 1.96s | Total Time: 189.38s
+Epoch 101/200 | Train Loss: 1.198257 (point=0.008031, rot=0.122076 rad, trans=18.895125 mm, corr=4.941468, sal=0.000000, base_trans=20.461 mm, tres=5.756 mm, tres_loss=0.0740, valid=0.5871, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.72s | Total Time: 191.12s
+Epoch 102/200 | Train Loss: 1.266435 (point=0.008020, rot=0.125208 rad, trans=21.261535 mm, corr=4.971902, sal=0.000000, base_trans=22.879 mm, tres=5.880 mm, tres_loss=0.0856, valid=0.5848, hand=1.0000) | Val Loss: 1.313204 | Val Metric: trans=32.800152 mm, rot=16.138961 deg, base_trans=33.662 mm, tres=4.958 mm, sal=0.000000, hand=1.0000, score=4.893911 | Time: 2.05s | Total Time: 193.19s
+Epoch 103/200 | Train Loss: 1.276005 (point=0.007720, rot=0.119610 rad, trans=22.431007 mm, corr=4.913731, sal=0.000000, base_trans=24.550 mm, tres=6.040 mm, tres_loss=0.0891, valid=0.5859, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.75s | Total Time: 194.96s
+Epoch 104/200 | Train Loss: 1.506199 (point=0.007878, rot=0.157483 rad, trans=29.227872 mm, corr=4.907115, sal=0.000000, base_trans=29.923 mm, tres=6.182 mm, tres_loss=0.1081, valid=0.5862, hand=1.0000) | Val Loss: 1.209234 | Val Metric: trans=28.925000 mm, rot=14.882451 deg, base_trans=28.928 mm, tres=4.980 mm, sal=0.000000, hand=1.0000, score=4.380745 | Time: 1.97s | Total Time: 196.95s
+  -> Save best translation model, trans=28.925000 mm, rot=14.882451 deg
+Epoch 105/200 | Train Loss: 1.385331 (point=0.008010, rot=0.143969 rad, trans=25.076525 mm, corr=4.918768, sal=0.000000, base_trans=26.810 mm, tres=6.132 mm, tres_loss=0.0960, valid=0.5839, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 198.69s
+Epoch 106/200 | Train Loss: 1.419954 (point=0.008143, rot=0.140717 rad, trans=26.769869 mm, corr=4.930047, sal=0.000000, base_trans=28.406 mm, tres=5.987 mm, tres_loss=0.1020, valid=0.5893, hand=1.0000) | Val Loss: 1.083956 | Val Metric: trans=26.948440 mm, rot=13.404680 deg, base_trans=28.385 mm, tres=5.011 mm, sal=0.000000, hand=1.0000, score=4.035312 | Time: 1.96s | Total Time: 200.67s
+  -> Save best model, validation score: 4.035312 (trans=26.948440 mm, rot=13.404680 deg, hand=1.0000)
+  -> Save best translation model, trans=26.948440 mm, rot=13.404680 deg
+  -> Save best rotation model, trans=26.948440 mm, rot=13.404680 deg
+Epoch 107/200 | Train Loss: 1.460251 (point=0.008611, rot=0.146794 rad, trans=27.503090 mm, corr=4.969374, sal=0.000000, base_trans=29.067 mm, tres=5.957 mm, tres_loss=0.1111, valid=0.5865, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.77s | Total Time: 202.50s
+Epoch 108/200 | Train Loss: 1.371142 (point=0.008163, rot=0.139507 rad, trans=24.562886 mm, corr=4.952140, sal=0.000000, base_trans=26.325 mm, tres=6.133 mm, tres_loss=0.0975, valid=0.5813, hand=1.0000) | Val Loss: 1.262614 | Val Metric: trans=33.468559 mm, rot=15.058105 deg, base_trans=35.226 mm, tres=5.062 mm, sal=0.000000, hand=1.0000, score=4.852666 | Time: 2.05s | Total Time: 204.57s
+Epoch 109/200 | Train Loss: 1.657506 (point=0.008268, rot=0.174819 rad, trans=33.963676 mm, corr=4.898514, sal=0.000000, base_trans=34.786 mm, tres=6.298 mm, tres_loss=0.1305, valid=0.5881, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 206.29s
+Epoch 110/200 | Train Loss: 1.278967 (point=0.007992, rot=0.132968 rad, trans=21.424175 mm, corr=4.904257, sal=0.000000, base_trans=23.194 mm, tres=6.181 mm, tres_loss=0.0861, valid=0.5840, hand=1.0000) | Val Loss: 1.209740 | Val Metric: trans=28.766960 mm, rot=15.161311 deg, base_trans=28.897 mm, tres=5.093 mm, sal=0.000000, hand=1.0000, score=4.392827 | Time: 1.97s | Total Time: 208.29s
+Epoch 111/200 | Train Loss: 1.269516 (point=0.008109, rot=0.123240 rad, trans=21.792215 mm, corr=4.910941, sal=0.000000, base_trans=23.274 mm, tres=6.074 mm, tres_loss=0.0880, valid=0.5835, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.64s | Total Time: 209.94s
+Epoch 112/200 | Train Loss: 1.371789 (point=0.008202, rot=0.132050 rad, trans=25.662325 mm, corr=4.903533, sal=0.000000, base_trans=27.171 mm, tres=6.121 mm, tres_loss=0.0959, valid=0.5854, hand=1.0000) | Val Loss: 1.189717 | Val Metric: trans=30.119926 mm, rot=14.410590 deg, base_trans=31.836 mm, tres=5.069 mm, sal=0.000000, hand=1.0000, score=4.453052 | Time: 2.00s | Total Time: 211.96s
+Epoch 113/200 | Train Loss: 1.472395 (point=0.007359, rot=0.141499 rad, trans=28.969967 mm, corr=4.885276, sal=0.000000, base_trans=29.888 mm, tres=5.904 mm, tres_loss=0.1141, valid=0.5875, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 213.67s
+Epoch 114/200 | Train Loss: 1.222836 (point=0.007723, rot=0.121628 rad, trans=20.078835 mm, corr=4.898232, sal=0.000000, base_trans=21.594 mm, tres=5.969 mm, tres_loss=0.0805, valid=0.5878, hand=1.0000) | Val Loss: 1.348763 | Val Metric: trans=35.238820 mm, rot=15.927621 deg, base_trans=35.725 mm, tres=5.107 mm, sal=0.000000, hand=1.0000, score=5.116644 | Time: 2.03s | Total Time: 215.72s
+Epoch 115/200 | Train Loss: 1.319417 (point=0.007743, rot=0.127444 rad, trans=23.664109 mm, corr=4.894651, sal=0.000000, base_trans=25.135 mm, tres=5.950 mm, tres_loss=0.0940, valid=0.5868, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 217.43s
+Epoch 116/200 | Train Loss: 1.403248 (point=0.007757, rot=0.136130 rad, trans=26.624185 mm, corr=4.881072, sal=0.000000, base_trans=27.221 mm, tres=6.052 mm, tres_loss=0.1026, valid=0.5854, hand=1.0000) | Val Loss: 1.218735 | Val Metric: trans=30.338022 mm, rot=14.951882 deg, base_trans=30.371 mm, tres=5.158 mm, sal=0.000000, hand=1.0000, score=4.528990 | Time: 2.15s | Total Time: 219.60s
+Epoch 117/200 | Train Loss: 1.254451 (point=0.007509, rot=0.139523 rad, trans=19.786903 mm, corr=4.905279, sal=0.000000, base_trans=20.857 mm, tres=5.773 mm, tres_loss=0.0816, valid=0.5912, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.66s | Total Time: 221.28s
+Epoch 118/200 | Train Loss: 1.301901 (point=0.007614, rot=0.130529 rad, trans=22.659406 mm, corr=4.892133, sal=0.000000, base_trans=24.099 mm, tres=5.820 mm, tres_loss=0.0908, valid=0.5850, hand=1.0000) | Val Loss: 1.264494 | Val Metric: trans=30.101381 mm, rot=15.399230 deg, base_trans=31.496 mm, tres=5.137 mm, sal=0.000000, hand=1.0000, score=4.550061 | Time: 1.93s | Total Time: 223.23s
+Epoch 119/200 | Train Loss: 1.269349 (point=0.007698, rot=0.136830 rad, trans=21.099286 mm, corr=4.869813, sal=0.000000, base_trans=23.213 mm, tres=5.824 mm, tres_loss=0.0790, valid=0.5850, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 224.94s
+Epoch 120/200 | Train Loss: 1.387671 (point=0.007720, rot=0.149627 rad, trans=24.830898 mm, corr=4.887858, sal=0.000000, base_trans=25.326 mm, tres=6.056 mm, tres_loss=0.0953, valid=0.5918, hand=1.0000) | Val Loss: 1.207900 | Val Metric: trans=33.465844 mm, rot=13.789907 deg, base_trans=34.132 mm, tres=5.222 mm, sal=0.000000, hand=1.0000, score=4.725575 | Time: 1.96s | Total Time: 226.92s
+Epoch 121/200 | Train Loss: 1.316949 (point=0.007697, rot=0.155233 rad, trans=21.224042 mm, corr=4.883254, sal=0.000000, base_trans=22.845 mm, tres=6.050 mm, tres_loss=0.0860, valid=0.5848, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.64s | Total Time: 228.57s
+Epoch 122/200 | Train Loss: 1.162400 (point=0.007405, rot=0.128892 rad, trans=17.020879 mm, corr=4.876056, sal=0.000000, base_trans=18.433 mm, tres=5.964 mm, tres_loss=0.0692, valid=0.5890, hand=1.0000) | Val Loss: 1.125711 | Val Metric: trans=30.786765 mm, rot=13.151681 deg, base_trans=31.516 mm, tres=5.146 mm, sal=0.000000, hand=1.0000, score=4.393845 | Time: 1.91s | Total Time: 230.50s
+  -> Save best rotation model, trans=30.786765 mm, rot=13.151681 deg
+Epoch 123/200 | Train Loss: 1.342293 (point=0.007498, rot=0.138329 rad, trans=23.798784 mm, corr=4.887998, sal=0.000000, base_trans=25.328 mm, tres=5.857 mm, tres_loss=0.0934, valid=0.5868, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.95s | Total Time: 232.48s
+Epoch 124/200 | Train Loss: 1.276436 (point=0.007409, rot=0.131573 rad, trans=21.542309 mm, corr=4.871760, sal=0.000000, base_trans=23.330 mm, tres=5.868 mm, tres_loss=0.0879, valid=0.5854, hand=1.0000) | Val Loss: 1.228412 | Val Metric: trans=30.682021 mm, rot=14.518104 deg, base_trans=32.619 mm, tres=5.235 mm, sal=0.000000, hand=1.0000, score=4.520013 | Time: 1.93s | Total Time: 234.43s
+Epoch 125/200 | Train Loss: 1.152938 (point=0.007295, rot=0.114988 rad, trans=17.889964 mm, corr=4.855495, sal=0.000000, base_trans=19.170 mm, tres=6.023 mm, tres_loss=0.0723, valid=0.5868, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 236.12s
+Epoch 126/200 | Train Loss: 1.248293 (point=0.007650, rot=0.126543 rad, trans=20.934170 mm, corr=4.866864, sal=0.000000, base_trans=22.861 mm, tres=5.916 mm, tres_loss=0.0822, valid=0.5802, hand=1.0000) | Val Loss: 1.106992 | Val Metric: trans=29.764289 mm, rot=13.170510 deg, base_trans=30.792 mm, tres=5.231 mm, sal=0.000000, hand=1.0000, score=4.293480 | Time: 1.97s | Total Time: 238.11s
+Epoch 127/200 | Train Loss: 1.193327 (point=0.007376, rot=0.120759 rad, trans=18.989092 mm, corr=4.868976, sal=0.000000, base_trans=20.664 mm, tres=6.013 mm, tres_loss=0.0778, valid=0.5854, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 239.81s
+Epoch 128/200 | Train Loss: 1.487577 (point=0.007231, rot=0.147759 rad, trans=29.256257 mm, corr=4.878522, sal=0.000000, base_trans=30.932 mm, tres=5.911 mm, tres_loss=0.1119, valid=0.5823, hand=1.0000) | Val Loss: 1.229099 | Val Metric: trans=31.101848 mm, rot=14.628251 deg, base_trans=31.967 mm, tres=5.228 mm, sal=0.000000, hand=1.0000, score=4.573010 | Time: 2.07s | Total Time: 241.91s
+Epoch 129/200 | Train Loss: 1.514490 (point=0.007575, rot=0.152464 rad, trans=30.126607 mm, corr=4.887289, sal=0.000000, base_trans=31.458 mm, tres=5.916 mm, tres_loss=0.1107, valid=0.5876, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.67s | Total Time: 243.60s
+Epoch 130/200 | Train Loss: 1.330403 (point=0.007439, rot=0.120869 rad, trans=24.969493 mm, corr=4.894855, sal=0.000000, base_trans=25.942 mm, tres=5.804 mm, tres_loss=0.0924, valid=0.5848, hand=1.0000) | Val Loss: 1.250507 | Val Metric: trans=33.149648 mm, rot=14.951678 deg, base_trans=33.924 mm, tres=5.321 mm, sal=0.000000, hand=1.0000, score=4.810133 | Time: 2.36s | Total Time: 245.98s
+Epoch 131/200 | Train Loss: 1.302081 (point=0.007254, rot=0.129544 rad, trans=22.935978 mm, corr=4.879642, sal=0.000000, base_trans=24.661 mm, tres=5.993 mm, tres_loss=0.0891, valid=0.5868, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 247.67s
+Epoch 132/200 | Train Loss: 1.269974 (point=0.007243, rot=0.124717 rad, trans=21.998272 mm, corr=4.874653, sal=0.000000, base_trans=24.295 mm, tres=5.986 mm, tres_loss=0.0859, valid=0.5894, hand=1.0000) | Val Loss: 1.290766 | Val Metric: trans=33.537038 mm, rot=15.218271 deg, base_trans=33.981 mm, tres=5.201 mm, sal=0.000000, hand=1.0000, score=4.875531 | Time: 1.95s | Total Time: 249.64s
+Epoch 133/200 | Train Loss: 1.242752 (point=0.007064, rot=0.119488 rad, trans=21.335476 mm, corr=4.856020, sal=0.000000, base_trans=22.927 mm, tres=5.999 mm, tres_loss=0.0844, valid=0.5903, hand=1.0000) | Val Loss: skipped this epoch | Time: 2.04s | Total Time: 251.70s
+Epoch 134/200 | Train Loss: 1.295722 (point=0.007103, rot=0.124492 rad, trans=23.184973 mm, corr=4.861272, sal=0.000000, base_trans=24.253 mm, tres=6.055 mm, tres_loss=0.0898, valid=0.5895, hand=1.0000) | Val Loss: 1.182759 | Val Metric: trans=32.127319 mm, rot=13.436723 deg, base_trans=33.633 mm, tres=5.346 mm, sal=0.000000, hand=1.0000, score=4.556404 | Time: 2.03s | Total Time: 253.76s
+Epoch 135/200 | Train Loss: 1.392745 (point=0.007728, rot=0.133697 rad, trans=26.384479 mm, corr=4.906582, sal=0.000000, base_trans=28.035 mm, tres=6.006 mm, tres_loss=0.0993, valid=0.5861, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 255.47s
+Epoch 136/200 | Train Loss: 1.298051 (point=0.007303, rot=0.115217 rad, trans=24.107430 mm, corr=4.851665, sal=0.000000, base_trans=25.893 mm, tres=6.087 mm, tres_loss=0.0930, valid=0.5880, hand=1.0000) | Val Loss: 1.144334 | Val Metric: trans=30.956474 mm, rot=13.260980 deg, base_trans=33.038 mm, tres=5.382 mm, sal=0.000000, hand=1.0000, score=4.421745 | Time: 2.08s | Total Time: 257.57s
+Epoch 137/200 | Train Loss: 1.238241 (point=0.007143, rot=0.115480 rad, trans=21.527663 mm, corr=4.874210, sal=0.000000, base_trans=22.399 mm, tres=5.967 mm, tres_loss=0.0822, valid=0.5841, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.80s | Total Time: 259.40s
+Epoch 138/200 | Train Loss: 1.149097 (point=0.007043, rot=0.121884 rad, trans=17.067621 mm, corr=4.868441, sal=0.000000, base_trans=18.450 mm, tres=5.889 mm, tres_loss=0.0701, valid=0.5876, hand=1.0000) | Val Loss: 1.152851 | Val Metric: trans=31.922574 mm, rot=13.361697 deg, base_trans=32.092 mm, tres=5.417 mm, sal=0.000000, hand=1.0000, score=4.528427 | Time: 1.97s | Total Time: 261.39s
+Epoch 139/200 | Train Loss: 1.247175 (point=0.007025, rot=0.119687 rad, trans=21.560016 mm, corr=4.858995, sal=0.000000, base_trans=23.196 mm, tres=5.974 mm, tres_loss=0.0837, valid=0.5854, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 263.10s
+Epoch 140/200 | Train Loss: 1.281510 (point=0.007538, rot=0.128460 rad, trans=22.049696 mm, corr=4.885077, sal=0.000000, base_trans=23.749 mm, tres=5.957 mm, tres_loss=0.0876, valid=0.5839, hand=1.0000) | Val Loss: 1.247599 | Val Metric: trans=31.337489 mm, rot=14.838081 deg, base_trans=31.773 mm, tres=5.372 mm, sal=0.000000, hand=1.0000, score=4.617557 | Time: 1.96s | Total Time: 265.08s
+Epoch 141/200 | Train Loss: 1.309632 (point=0.007305, rot=0.138202 rad, trans=22.797510 mm, corr=4.839651, sal=0.000000, base_trans=23.845 mm, tres=5.954 mm, tres_loss=0.0860, valid=0.5854, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.64s | Total Time: 266.74s
+Epoch 142/200 | Train Loss: 1.197192 (point=0.007121, rot=0.114493 rad, trans=19.867973 mm, corr=4.842225, sal=0.000000, base_trans=22.066 mm, tres=5.960 mm, tres_loss=0.0795, valid=0.5817, hand=1.0000) | Val Loss: 1.207871 | Val Metric: trans=33.911027 mm, rot=13.708509 deg, base_trans=35.421 mm, tres=5.403 mm, sal=0.000000, hand=1.0000, score=4.761954 | Time: 2.03s | Total Time: 268.78s
+Epoch 143/200 | Train Loss: 1.201909 (point=0.007134, rot=0.113409 rad, trans=20.097395 mm, corr=4.864027, sal=0.000000, base_trans=21.683 mm, tres=6.051 mm, tres_loss=0.0796, valid=0.5886, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 270.53s
+Epoch 144/200 | Train Loss: 1.249170 (point=0.007158, rot=0.123878 rad, trans=21.424927 mm, corr=4.861654, sal=0.000000, base_trans=22.883 mm, tres=5.962 mm, tres_loss=0.0796, valid=0.5856, hand=1.0000) | Val Loss: 1.134715 | Val Metric: trans=27.719432 mm, rot=13.483903 deg, base_trans=29.975 mm, tres=5.356 mm, sal=0.000000, hand=1.0000, score=4.120333 | Time: 1.94s | Total Time: 272.50s
+Epoch 145/200 | Train Loss: 1.145675 (point=0.006813, rot=0.108154 rad, trans=18.218000 mm, corr=4.840838, sal=0.000000, base_trans=19.881 mm, tres=5.919 mm, tres_loss=0.0741, valid=0.5876, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 274.23s
+Epoch 146/200 | Train Loss: 1.358993 (point=0.007259, rot=0.126869 rad, trans=25.902845 mm, corr=4.855660, sal=0.000000, base_trans=27.334 mm, tres=5.863 mm, tres_loss=0.0944, valid=0.5857, hand=1.0000) | Val Loss: 1.136985 | Val Metric: trans=31.677969 mm, rot=12.798293 deg, base_trans=32.402 mm, tres=5.202 mm, sal=0.000000, hand=1.0000, score=4.447626 | Time: 2.07s | Total Time: 276.31s
+  -> Save best rotation model, trans=31.677969 mm, rot=12.798293 deg
+Epoch 147/200 | Train Loss: 1.305266 (point=0.007422, rot=0.126406 rad, trans=23.668202 mm, corr=4.855457, sal=0.000000, base_trans=25.168 mm, tres=5.952 mm, tres_loss=0.0861, valid=0.5844, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.66s | Total Time: 278.01s
+Epoch 148/200 | Train Loss: 1.156573 (point=0.007024, rot=0.107654 rad, trans=18.780122 mm, corr=4.835846, sal=0.000000, base_trans=20.324 mm, tres=5.896 mm, tres_loss=0.0751, valid=0.5849, hand=1.0000) | Val Loss: 1.228413 | Val Metric: trans=29.940711 mm, rot=14.591609 deg, base_trans=31.593 mm, tres=5.411 mm, sal=0.000000, hand=1.0000, score=4.453232 | Time: 2.02s | Total Time: 280.05s
+Epoch 149/200 | Train Loss: 1.256626 (point=0.007327, rot=0.125891 rad, trans=21.402137 mm, corr=4.858747, sal=0.000000, base_trans=23.646 mm, tres=5.952 mm, tres_loss=0.0836, valid=0.5860, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.75s | Total Time: 281.82s
+Epoch 150/200 | Train Loss: 1.283235 (point=0.007299, rot=0.109615 rad, trans=23.943314 mm, corr=4.861945, sal=0.000000, base_trans=25.393 mm, tres=5.914 mm, tres_loss=0.0916, valid=0.5850, hand=1.0000) | Val Loss: 1.124021 | Val Metric: trans=32.182831 mm, rot=12.751441 deg, base_trans=32.614 mm, tres=5.377 mm, sal=0.000000, hand=1.0000, score=4.493427 | Time: 2.04s | Total Time: 283.88s
+  -> Save best rotation model, trans=32.182831 mm, rot=12.751441 deg
+Epoch 151/200 | Train Loss: 1.166157 (point=0.006944, rot=0.107393 rad, trans=19.024973 mm, corr=4.866224, sal=0.000000, base_trans=20.393 mm, tres=5.955 mm, tres_loss=0.0773, valid=0.5875, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.74s | Total Time: 285.65s
+Epoch 152/200 | Train Loss: 1.283694 (point=0.007081, rot=0.121676 rad, trans=23.006354 mm, corr=4.863657, sal=0.000000, base_trans=24.512 mm, tres=5.877 mm, tres_loss=0.0868, valid=0.5905, hand=1.0000) | Val Loss: 1.253353 | Val Metric: trans=33.236877 mm, rot=14.382702 deg, base_trans=33.530 mm, tres=5.318 mm, sal=0.000000, hand=1.0000, score=4.761958 | Time: 2.05s | Total Time: 287.73s
+Epoch 153/200 | Train Loss: 1.190386 (point=0.007026, rot=0.129048 rad, trans=18.324401 mm, corr=4.839063, sal=0.000000, base_trans=19.295 mm, tres=5.784 mm, tres_loss=0.0749, valid=0.5853, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 289.46s
+Epoch 154/200 | Train Loss: 1.244663 (point=0.007041, rot=0.124115 rad, trans=20.877991 mm, corr=4.883657, sal=0.000000, base_trans=22.504 mm, tres=5.917 mm, tres_loss=0.0835, valid=0.5873, hand=1.0000) | Val Loss: 1.131464 | Val Metric: trans=32.193501 mm, rot=12.503103 deg, base_trans=32.746 mm, tres=5.428 mm, sal=0.000000, hand=1.0000, score=4.469660 | Time: 2.07s | Total Time: 291.54s
+  -> Save best rotation model, trans=32.193501 mm, rot=12.503103 deg
+Epoch 155/200 | Train Loss: 1.161518 (point=0.006975, rot=0.104468 rad, trans=19.244743 mm, corr=4.827534, sal=0.000000, base_trans=21.460 mm, tres=6.082 mm, tres_loss=0.0780, valid=0.5850, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 293.28s
+Epoch 156/200 | Train Loss: 1.309869 (point=0.007502, rot=0.132943 rad, trans=23.044188 mm, corr=4.857894, sal=0.000000, base_trans=24.312 mm, tres=5.921 mm, tres_loss=0.0898, valid=0.5864, hand=1.0000) | Val Loss: 1.159939 | Val Metric: trans=30.152954 mm, rot=13.598467 deg, base_trans=31.337 mm, tres=5.424 mm, sal=0.000000, hand=1.0000, score=4.375142 | Time: 2.12s | Total Time: 295.42s
+Epoch 157/200 | Train Loss: 1.165680 (point=0.007315, rot=0.108144 rad, trans=18.945958 mm, corr=4.869787, sal=0.000000, base_trans=20.598 mm, tres=5.916 mm, tres_loss=0.0762, valid=0.5837, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.77s | Total Time: 297.22s
+Epoch 158/200 | Train Loss: 1.193666 (point=0.006955, rot=0.113004 rad, trans=19.658863 mm, corr=4.871676, sal=0.000000, base_trans=20.895 mm, tres=6.005 mm, tres_loss=0.0804, valid=0.5834, hand=1.0000) | Val Loss: 1.296695 | Val Metric: trans=37.942416 mm, rot=14.230106 deg, base_trans=38.012 mm, tres=5.464 mm, sal=0.000000, hand=1.0000, score=5.217252 | Time: 2.12s | Total Time: 299.36s
+Epoch 159/200 | Train Loss: 1.197560 (point=0.006754, rot=0.111405 rad, trans=20.278725 mm, corr=4.842058, sal=0.000000, base_trans=22.165 mm, tres=5.969 mm, tres_loss=0.0782, valid=0.5842, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.96s | Total Time: 301.34s
+Epoch 160/200 | Train Loss: 1.168451 (point=0.007282, rot=0.114161 rad, trans=18.609830 mm, corr=4.874104, sal=0.000000, base_trans=20.697 mm, tres=5.886 mm, tres_loss=0.0732, valid=0.5878, hand=1.0000) | Val Loss: 1.080981 | Val Metric: trans=27.611607 mm, rot=12.640376 deg, base_trans=28.204 mm, tres=5.516 mm, sal=0.000000, hand=1.0000, score=4.025198 | Time: 1.94s | Total Time: 303.29s
+  -> Save best model, validation score: 4.025198 (trans=27.611607 mm, rot=12.640376 deg, hand=1.0000)
+Epoch 161/200 | Train Loss: 1.158082 (point=0.007035, rot=0.119985 rad, trans=17.604917 mm, corr=4.868495, sal=0.000000, base_trans=19.893 mm, tres=5.929 mm, tres_loss=0.0721, valid=0.5878, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.72s | Total Time: 305.06s
+Epoch 162/200 | Train Loss: 1.122702 (point=0.006501, rot=0.097413 rad, trans=18.310837 mm, corr=4.823821, sal=0.000000, base_trans=19.982 mm, tres=6.002 mm, tres_loss=0.0728, valid=0.5873, hand=1.0000) | Val Loss: 1.175505 | Val Metric: trans=33.665561 mm, rot=13.323969 deg, base_trans=34.075 mm, tres=5.489 mm, sal=0.000000, hand=1.0000, score=4.698953 | Time: 2.01s | Total Time: 307.08s
+Epoch 163/200 | Train Loss: 1.243269 (point=0.006971, rot=0.124843 rad, trans=20.931576 mm, corr=4.862424, sal=0.000000, base_trans=22.991 mm, tres=6.098 mm, tres_loss=0.0817, valid=0.5895, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.71s | Total Time: 308.81s
+Epoch 164/200 | Train Loss: 1.339747 (point=0.006824, rot=0.128411 rad, trans=24.854079 mm, corr=4.831137, sal=0.000000, base_trans=26.227 mm, tres=6.176 mm, tres_loss=0.0959, valid=0.5858, hand=1.0000) | Val Loss: 1.159180 | Val Metric: trans=30.609530 mm, rot=13.248231 deg, base_trans=31.201 mm, tres=5.428 mm, sal=0.000000, hand=1.0000, score=4.385776 | Time: 1.97s | Total Time: 310.80s
+Epoch 165/200 | Train Loss: 1.141783 (point=0.006776, rot=0.108559 rad, trans=17.967418 mm, corr=4.847483, sal=0.000000, base_trans=18.896 mm, tres=6.097 mm, tres_loss=0.0738, valid=0.5833, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.74s | Total Time: 312.57s
+Epoch 166/200 | Train Loss: 1.191275 (point=0.007099, rot=0.111317 rad, trans=19.771280 mm, corr=4.844592, sal=0.000000, base_trans=21.581 mm, tres=6.002 mm, tres_loss=0.0817, valid=0.5892, hand=1.0000) | Val Loss: 1.412971 | Val Metric: trans=38.824107 mm, rot=15.881477 deg, base_trans=39.302 mm, tres=5.433 mm, sal=0.000000, hand=1.0000, score=5.470558 | Time: 1.98s | Total Time: 314.56s
+Epoch 167/200 | Train Loss: 1.345238 (point=0.007091, rot=0.133195 rad, trans=24.441338 mm, corr=4.844961, sal=0.000000, base_trans=26.098 mm, tres=5.913 mm, tres_loss=0.0984, valid=0.5856, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 316.31s
+Epoch 168/200 | Train Loss: 1.125214 (point=0.006687, rot=0.112427 rad, trans=17.086021 mm, corr=4.830251, sal=0.000000, base_trans=18.584 mm, tres=5.882 mm, tres_loss=0.0689, valid=0.5892, hand=1.0000) | Val Loss: 1.197621 | Val Metric: trans=32.426556 mm, rot=13.585238 deg, base_trans=33.127 mm, tres=5.363 mm, sal=0.000000, hand=1.0000, score=4.601179 | Time: 2.05s | Total Time: 318.38s
+Epoch 169/200 | Train Loss: 1.214223 (point=0.007067, rot=0.121218 rad, trans=20.149691 mm, corr=4.834955, sal=0.000000, base_trans=22.213 mm, tres=5.974 mm, tres_loss=0.0782, valid=0.5852, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 320.13s
+Epoch 170/200 | Train Loss: 1.399225 (point=0.007035, rot=0.139182 rad, trans=26.560231 mm, corr=4.846621, sal=0.000000, base_trans=28.426 mm, tres=5.892 mm, tres_loss=0.0980, valid=0.5871, hand=1.0000) | Val Loss: 1.128482 | Val Metric: trans=30.254644 mm, rot=12.753978 deg, base_trans=31.677 mm, tres=5.505 mm, sal=0.000000, hand=1.0000, score=4.300862 | Time: 1.99s | Total Time: 322.15s
+Epoch 171/200 | Train Loss: 1.135812 (point=0.006919, rot=0.108783 rad, trans=17.741945 mm, corr=4.854878, sal=0.000000, base_trans=19.584 mm, tres=5.942 mm, tres_loss=0.0710, valid=0.5840, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.90s | Total Time: 324.06s
+Epoch 172/200 | Train Loss: 1.108839 (point=0.006731, rot=0.104597 rad, trans=16.928978 mm, corr=4.846287, sal=0.000000, base_trans=18.513 mm, tres=5.975 mm, tres_loss=0.0697, valid=0.5870, hand=1.0000) | Val Loss: 1.193788 | Val Metric: trans=26.813178 mm, rot=14.784067 deg, base_trans=28.971 mm, tres=5.403 mm, sal=0.000000, hand=1.0000, score=4.159725 | Time: 2.16s | Total Time: 326.25s
+  -> Save best translation model, trans=26.813178 mm, rot=14.784067 deg
+Epoch 173/200 | Train Loss: 1.218179 (point=0.007291, rot=0.111761 rad, trans=21.030935 mm, corr=4.826051, sal=0.000000, base_trans=22.330 mm, tres=5.964 mm, tres_loss=0.0841, valid=0.5825, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.85s | Total Time: 328.13s
+Epoch 174/200 | Train Loss: 1.324034 (point=0.007195, rot=0.122155 rad, trans=24.787571 mm, corr=4.831697, sal=0.000000, base_trans=26.582 mm, tres=5.960 mm, tres_loss=0.0936, valid=0.5881, hand=1.0000) | Val Loss: 1.243713 | Val Metric: trans=29.074876 mm, rot=15.133462 deg, base_trans=29.906 mm, tres=5.450 mm, sal=0.000000, hand=1.0000, score=4.420834 | Time: 2.05s | Total Time: 330.20s
+Epoch 175/200 | Train Loss: 1.225779 (point=0.007222, rot=0.121436 rad, trans=20.412221 mm, corr=4.871433, sal=0.000000, base_trans=22.225 mm, tres=6.026 mm, tres_loss=0.0803, valid=0.5858, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.70s | Total Time: 331.93s
+Epoch 176/200 | Train Loss: 1.192687 (point=0.007444, rot=0.122486 rad, trans=18.908915 mm, corr=4.849207, sal=0.000000, base_trans=20.909 mm, tres=5.956 mm, tres_loss=0.0772, valid=0.5800, hand=1.0000) | Val Loss: 1.295240 | Val Metric: trans=33.035277 mm, rot=15.086142 deg, base_trans=33.985 mm, tres=5.393 mm, sal=0.000000, hand=1.0000, score=4.812142 | Time: 2.01s | Total Time: 333.96s
+Epoch 177/200 | Train Loss: 1.204494 (point=0.006695, rot=0.120703 rad, trans=19.759411 mm, corr=4.842241, sal=0.000000, base_trans=21.867 mm, tres=6.036 mm, tres_loss=0.0770, valid=0.5827, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.63s | Total Time: 335.61s
+Epoch 178/200 | Train Loss: 1.169433 (point=0.006406, rot=0.103486 rad, trans=19.886754 mm, corr=4.816755, sal=0.000000, base_trans=21.846 mm, tres=6.069 mm, tres_loss=0.0766, valid=0.5827, hand=1.0000) | Val Loss: 1.201671 | Val Metric: trans=28.804567 mm, rot=14.183014 deg, base_trans=30.133 mm, tres=5.465 mm, sal=0.000000, hand=1.0000, score=4.298758 | Time: 1.94s | Total Time: 337.57s
+Epoch 179/200 | Train Loss: 1.270648 (point=0.007147, rot=0.131420 rad, trans=21.553706 mm, corr=4.876329, sal=0.000000, base_trans=23.093 mm, tres=6.030 mm, tres_loss=0.0820, valid=0.5888, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 339.28s
+Epoch 180/200 | Train Loss: 1.128956 (point=0.006930, rot=0.108087 rad, trans=17.446999 mm, corr=4.860112, sal=0.000000, base_trans=19.722 mm, tres=5.881 mm, tres_loss=0.0709, valid=0.5856, hand=1.0000) | Val Loss: 1.204206 | Val Metric: trans=32.457331 mm, rot=13.742709 deg, base_trans=33.976 mm, tres=5.486 mm, sal=0.000000, hand=1.0000, score=4.620004 | Time: 2.06s | Total Time: 341.36s
+Epoch 181/200 | Train Loss: 1.195699 (point=0.006982, rot=0.116183 rad, trans=19.833558 mm, corr=4.812352, sal=0.000000, base_trans=22.042 mm, tres=5.968 mm, tres_loss=0.0784, valid=0.5900, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.73s | Total Time: 343.10s
+Epoch 182/200 | Train Loss: 1.118918 (point=0.006925, rot=0.103284 rad, trans=17.619954 mm, corr=4.830574, sal=0.000000, base_trans=19.322 mm, tres=5.974 mm, tres_loss=0.0700, valid=0.5803, hand=1.0000) | Val Loss: 1.147376 | Val Metric: trans=30.149840 mm, rot=13.167433 deg, base_trans=30.851 mm, tres=5.504 mm, sal=0.000000, hand=1.0000, score=4.331727 | Time: 1.91s | Total Time: 345.03s
+Epoch 183/200 | Train Loss: 1.195421 (point=0.006644, rot=0.102749 rad, trans=20.938288 mm, corr=4.830328, sal=0.000000, base_trans=22.689 mm, tres=5.984 mm, tres_loss=0.0815, valid=0.5835, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.65s | Total Time: 346.70s
+Epoch 184/200 | Train Loss: 1.214658 (point=0.007261, rot=0.108464 rad, trans=21.010073 mm, corr=4.861161, sal=0.000000, base_trans=22.388 mm, tres=5.939 mm, tres_loss=0.0842, valid=0.5843, hand=1.0000) | Val Loss: 1.221489 | Val Metric: trans=31.172233 mm, rot=14.125388 deg, base_trans=32.195 mm, tres=5.445 mm, sal=0.000000, hand=1.0000, score=4.529762 | Time: 2.15s | Total Time: 348.87s
+Epoch 185/200 | Train Loss: 1.170261 (point=0.007149, rot=0.112553 rad, trans=18.955788 mm, corr=4.835671, sal=0.000000, base_trans=19.996 mm, tres=6.001 mm, tres_loss=0.0753, valid=0.5848, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.69s | Total Time: 350.59s
+Epoch 186/200 | Train Loss: 1.189974 (point=0.007063, rot=0.115325 rad, trans=19.379025 mm, corr=4.847914, sal=0.000000, base_trans=20.812 mm, tres=6.065 mm, tres_loss=0.0799, valid=0.5843, hand=1.0000) | Val Loss: 1.231111 | Val Metric: trans=31.058002 mm, rot=14.561690 deg, base_trans=31.595 mm, tres=5.547 mm, sal=0.000000, hand=1.0000, score=4.561969 | Time: 2.04s | Total Time: 352.65s
+Epoch 187/200 | Train Loss: 1.209890 (point=0.007007, rot=0.108400 rad, trans=20.801256 mm, corr=4.880137, sal=0.000000, base_trans=23.008 mm, tres=5.936 mm, tres_loss=0.0820, valid=0.5852, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.76s | Total Time: 354.44s
+Epoch 188/200 | Train Loss: 1.217200 (point=0.006973, rot=0.113753 rad, trans=20.767771 mm, corr=4.847257, sal=0.000000, base_trans=22.022 mm, tres=6.079 mm, tres_loss=0.0826, valid=0.5871, hand=1.0000) | Val Loss: 1.165424 | Val Metric: trans=29.670424 mm, rot=13.482378 deg, base_trans=30.600 mm, tres=5.449 mm, sal=0.000000, hand=1.0000, score=4.315280 | Time: 1.93s | Total Time: 356.39s
+Epoch 189/200 | Train Loss: 1.103039 (point=0.007153, rot=0.104277 rad, trans=16.979913 mm, corr=4.817906, sal=0.000000, base_trans=18.298 mm, tres=5.983 mm, tres_loss=0.0659, valid=0.5833, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.68s | Total Time: 358.08s
+Epoch 190/200 | Train Loss: 1.142289 (point=0.007137, rot=0.112296 rad, trans=17.831552 mm, corr=4.848479, sal=0.000000, base_trans=19.457 mm, tres=6.078 mm, tres_loss=0.0691, valid=0.5913, hand=1.0000) | Val Loss: 1.313902 | Val Metric: trans=31.966282 mm, rot=15.240543 deg, base_trans=32.647 mm, tres=5.501 mm, sal=0.000000, hand=1.0000, score=4.720683 | Time: 2.01s | Total Time: 360.12s
+Epoch 191/200 | Train Loss: 1.086243 (point=0.006810, rot=0.096316 rad, trans=16.885539 mm, corr=4.819928, sal=0.000000, base_trans=19.080 mm, tres=5.995 mm, tres_loss=0.0671, valid=0.5830, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.76s | Total Time: 361.90s
+Epoch 192/200 | Train Loss: 1.195233 (point=0.006693, rot=0.115126 rad, trans=19.891878 mm, corr=4.828142, sal=0.000000, base_trans=20.892 mm, tres=6.015 mm, tres_loss=0.0776, valid=0.5848, hand=1.0000) | Val Loss: 1.145785 | Val Metric: trans=26.621731 mm, rot=13.929508 deg, base_trans=27.506 mm, tres=5.459 mm, sal=0.000000, hand=1.0000, score=4.055124 | Time: 2.04s | Total Time: 363.96s
+  -> Save best translation model, trans=26.621731 mm, rot=13.929508 deg
+Epoch 193/200 | Train Loss: 1.313501 (point=0.006960, rot=0.128012 rad, trans=23.857172 mm, corr=4.837218, sal=0.000000, base_trans=25.484 mm, tres=6.156 mm, tres_loss=0.0897, valid=0.5871, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.79s | Total Time: 365.78s
+Epoch 194/200 | Train Loss: 1.167798 (point=0.006799, rot=0.106342 rad, trans=19.416400 mm, corr=4.835797, sal=0.000000, base_trans=21.222 mm, tres=6.015 mm, tres_loss=0.0764, valid=0.5850, hand=1.0000) | Val Loss: 1.165830 | Val Metric: trans=30.470877 mm, rot=12.922895 deg, base_trans=31.676 mm, tres=5.456 mm, sal=0.000000, hand=1.0000, score=4.339377 | Time: 1.98s | Total Time: 367.78s
+Epoch 195/200 | Train Loss: 1.108919 (point=0.006666, rot=0.104469 rad, trans=17.058404 mm, corr=4.820726, sal=0.000000, base_trans=18.629 mm, tres=6.068 mm, tres_loss=0.0701, valid=0.5852, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.74s | Total Time: 369.54s
+Epoch 196/200 | Train Loss: 1.160491 (point=0.007219, rot=0.107248 rad, trans=19.023079 mm, corr=4.813569, sal=0.000000, base_trans=21.388 mm, tres=5.952 mm, tres_loss=0.0770, valid=0.5870, hand=1.0000) | Val Loss: 1.169635 | Val Metric: trans=26.020879 mm, rot=14.262087 deg, base_trans=27.185 mm, tres=5.505 mm, sal=0.000000, hand=1.0000, score=4.028297 | Time: 1.97s | Total Time: 371.53s
+  -> Save best translation model, trans=26.020879 mm, rot=14.262087 deg
+Epoch 197/200 | Train Loss: 1.168551 (point=0.007080, rot=0.110788 rad, trans=18.887825 mm, corr=4.839541, sal=0.000000, base_trans=20.589 mm, tres=6.092 mm, tres_loss=0.0782, valid=0.5837, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.72s | Total Time: 373.29s
+Epoch 198/200 | Train Loss: 1.180807 (point=0.006971, rot=0.110702 rad, trans=19.481729 mm, corr=4.847096, sal=0.000000, base_trans=21.151 mm, tres=6.051 mm, tres_loss=0.0781, valid=0.5867, hand=1.0000) | Val Loss: 1.159610 | Val Metric: trans=28.034402 mm, rot=13.663468 deg, base_trans=28.535 mm, tres=5.477 mm, sal=0.000000, hand=1.0000, score=4.169787 | Time: 1.99s | Total Time: 375.29s
+Epoch 199/200 | Train Loss: 1.199511 (point=0.006812, rot=0.122637 rad, trans=19.335484 mm, corr=4.832619, sal=0.000000, base_trans=21.188 mm, tres=5.986 mm, tres_loss=0.0775, valid=0.5840, hand=1.0000) | Val Loss: skipped this epoch | Time: 1.72s | Total Time: 377.03s
+Epoch 200/200 | Train Loss: 1.290529 (point=0.006897, rot=0.120759 rad, trans=23.357114 mm, corr=4.837818, sal=0.000000, base_trans=24.873 mm, tres=6.072 mm, tres_loss=0.0912, valid=0.5885, hand=1.0000) | Val Loss: 1.224675 | Val Metric: trans=31.346335 mm, rot=14.254398 deg, base_trans=31.787 mm, tres=5.513 mm, sal=0.000000, hand=1.0000, score=4.560073 | Time: 1.98s | Total Time: 379.04s
