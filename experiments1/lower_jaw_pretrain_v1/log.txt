@@ -1,0 +1,131 @@
+Epoch 1/100 | Loss: 1.521623 | Time: 787.43s | Total Time: 787.43s
+  -> Save best pretrain model, loss: 1.521623
+Epoch 2/100 | Loss: 0.896989 | Time: 672.92s | Total Time: 1460.60s
+  -> Save best pretrain model, loss: 0.896989
+Epoch 3/100 | Loss: 0.781699 | Time: 624.99s | Total Time: 2085.61s
+  -> Save best pretrain model, loss: 0.781699
+Epoch 4/100 | Loss: 0.672668 | Time: 570.26s | Total Time: 2655.89s
+  -> Save best pretrain model, loss: 0.672668
+Epoch 5/100 | Loss: 0.682974 | Time: 641.60s | Total Time: 3297.51s
+Epoch 6/100 | Loss: 0.500811 | Time: 625.60s | Total Time: 3923.12s
+  -> Save best pretrain model, loss: 0.500811
+Epoch 1/100 | Loss: 1.532224 | Time: 559.20s | Total Time: 559.20s
+  -> Save best pretrain model, loss: 1.532224
+Epoch 2/100 | Loss: 0.953834 | Time: 552.01s | Total Time: 1111.24s
+  -> Save best pretrain model, loss: 0.953834
+Epoch 3/100 | Loss: 0.824934 | Time: 577.37s | Total Time: 1688.63s
+  -> Save best pretrain model, loss: 0.824934
+Epoch 4/100 | Loss: 0.625876 | Time: 593.50s | Total Time: 2282.14s
+  -> Save best pretrain model, loss: 0.625876
+Epoch 5/100 | Loss: 0.624153 | Time: 589.36s | Total Time: 2871.52s
+  -> Save best pretrain model, loss: 0.624153
+Epoch 6/100 | Loss: 0.738576 | Time: 627.05s | Total Time: 3498.59s
+Epoch 7/100 | Loss: 0.709762 | Time: 655.67s | Total Time: 4154.33s
+Epoch 8/100 | Loss: 0.645265 | Time: 742.48s | Total Time: 4896.82s
+Epoch 9/100 | Loss: 0.572959 | Time: 646.33s | Total Time: 5543.27s
+  -> Save best pretrain model, loss: 0.572959
+Epoch 10/100 | Loss: 0.568487 | Time: 541.62s | Total Time: 6084.90s
+  -> Save best pretrain model, loss: 0.568487
+Epoch 11/100 | Loss: 0.519775 | Time: 576.55s | Total Time: 6661.47s
+  -> Save best pretrain model, loss: 0.519775
+Epoch 12/100 | Loss: 0.520009 | Time: 586.82s | Total Time: 7248.30s
+Epoch 13/100 | Loss: 0.497767 | Time: 581.90s | Total Time: 7830.21s
+  -> Save best pretrain model, loss: 0.497767
+Epoch 14/100 | Loss: 0.455466 | Time: 553.78s | Total Time: 8384.00s
+  -> Save best pretrain model, loss: 0.455466
+Epoch 15/100 | Loss: 0.582285 | Time: 624.43s | Total Time: 9008.45s
+Epoch 16/100 | Loss: 0.473591 | Time: 588.47s | Total Time: 9596.93s
+Epoch 17/100 | Loss: 0.506322 | Time: 902.85s | Total Time: 10499.79s
+Epoch 18/100 | Loss: 0.470146 | Time: 596.43s | Total Time: 11096.35s
+Epoch 19/100 | Loss: 0.430561 | Time: 936.86s | Total Time: 12033.22s
+  -> Save best pretrain model, loss: 0.430561
+Epoch 20/100 | Loss: 0.456698 | Time: 593.27s | Total Time: 12626.62s
+Epoch 21/100 | Loss: 0.466390 | Time: 898.80s | Total Time: 13525.44s
+Epoch 22/100 | Loss: 0.494225 | Time: 592.28s | Total Time: 14117.84s
+Epoch 23/100 | Loss: 0.432891 | Time: 894.05s | Total Time: 15011.90s
+Epoch 24/100 | Loss: 0.434562 | Time: 598.29s | Total Time: 15610.33s
+Epoch 25/100 | Loss: 0.525198 | Time: 825.12s | Total Time: 16435.46s
+Epoch 26/100 | Loss: 0.426807 | Time: 794.92s | Total Time: 17230.54s
+  -> Save best pretrain model, loss: 0.426807
+Epoch 27/100 | Loss: 0.421306 | Time: 660.28s | Total Time: 17890.84s
+  -> Save best pretrain model, loss: 0.421306
+Epoch 28/100 | Loss: 0.344268 | Time: 912.36s | Total Time: 18803.38s
+  -> Save best pretrain model, loss: 0.344268
+Epoch 29/100 | Loss: 0.419237 | Time: 703.62s | Total Time: 19507.15s
+Epoch 30/100 | Loss: 0.469841 | Time: 865.63s | Total Time: 20372.89s
+Epoch 31/100 | Loss: 0.401106 | Time: 628.19s | Total Time: 21001.22s
+Epoch 32/100 | Loss: 0.344198 | Time: 847.10s | Total Time: 21848.42s
+  -> Save best pretrain model, loss: 0.344198
+Epoch 33/100 | Loss: 0.490087 | Time: 603.48s | Total Time: 22452.05s
+Epoch 34/100 | Loss: 0.367214 | Time: 1125.18s | Total Time: 23577.25s
+Epoch 35/100 | Loss: 0.466864 | Time: 719.14s | Total Time: 24296.53s
+Epoch 36/100 | Loss: 0.468618 | Time: 908.88s | Total Time: 25205.44s
+Epoch 37/100 | Loss: 0.385639 | Time: 591.49s | Total Time: 25797.05s
+Epoch 38/100 | Loss: 0.550676 | Time: 599.20s | Total Time: 26396.27s
+Epoch 39/100 | Loss: 0.368229 | Time: 569.75s | Total Time: 26966.02s
+Epoch 40/100 | Loss: 0.389432 | Time: 637.50s | Total Time: 27603.54s
+Epoch 41/100 | Loss: 0.361996 | Time: 585.92s | Total Time: 28189.47s
+Epoch 42/100 | Loss: 0.341549 | Time: 580.36s | Total Time: 28769.84s
+  -> Save best pretrain model, loss: 0.341549
+Epoch 43/100 | Loss: 0.271057 | Time: 604.65s | Total Time: 29374.51s
+  -> Save best pretrain model, loss: 0.271057
+Epoch 44/100 | Loss: 0.401987 | Time: 597.15s | Total Time: 29971.67s
+Epoch 45/100 | Loss: 0.419979 | Time: 602.86s | Total Time: 30574.54s
+Epoch 46/100 | Loss: 0.454565 | Time: 586.67s | Total Time: 31161.23s
+Epoch 47/100 | Loss: 0.489846 | Time: 566.67s | Total Time: 31727.91s
+Epoch 48/100 | Loss: 0.273377 | Time: 574.19s | Total Time: 32302.11s
+Epoch 49/100 | Loss: 0.257926 | Time: 606.52s | Total Time: 32908.63s
+  -> Save best pretrain model, loss: 0.257926
+Epoch 50/100 | Loss: 0.302891 | Time: 609.00s | Total Time: 33517.65s
+Epoch 51/100 | Loss: 0.365998 | Time: 589.39s | Total Time: 34107.05s
+Epoch 52/100 | Loss: 0.405544 | Time: 584.58s | Total Time: 34691.64s
+Epoch 53/100 | Loss: 0.356717 | Time: 579.89s | Total Time: 35271.54s
+Epoch 54/100 | Loss: 0.341323 | Time: 606.28s | Total Time: 35877.82s
+Epoch 55/100 | Loss: 0.371142 | Time: 622.28s | Total Time: 36500.11s
+Epoch 56/100 | Loss: 0.286451 | Time: 575.22s | Total Time: 37075.38s
+Epoch 57/100 | Loss: 0.349161 | Time: 579.63s | Total Time: 37655.02s
+Epoch 58/100 | Loss: 0.308074 | Time: 579.04s | Total Time: 38234.07s
+Epoch 59/100 | Loss: 0.328366 | Time: 584.61s | Total Time: 38818.69s
+Epoch 60/100 | Loss: 0.374121 | Time: 581.23s | Total Time: 39399.94s
+Epoch 61/100 | Loss: 0.344469 | Time: 580.65s | Total Time: 39980.60s
+Epoch 62/100 | Loss: 0.373758 | Time: 577.36s | Total Time: 40557.97s
+Epoch 63/100 | Loss: 0.296682 | Time: 600.15s | Total Time: 41158.13s
+Epoch 64/100 | Loss: 0.346895 | Time: 591.27s | Total Time: 41749.41s
+Epoch 65/100 | Loss: 0.323218 | Time: 578.99s | Total Time: 42328.41s
+Epoch 66/100 | Loss: 0.358534 | Time: 574.14s | Total Time: 42902.56s
+Epoch 67/100 | Loss: 0.245406 | Time: 577.96s | Total Time: 43480.53s
+  -> Save best pretrain model, loss: 0.245406
+Epoch 68/100 | Loss: 0.326274 | Time: 578.74s | Total Time: 44059.29s
+Epoch 69/100 | Loss: 0.342223 | Time: 559.50s | Total Time: 44618.80s
+Epoch 70/100 | Loss: 0.261836 | Time: 587.37s | Total Time: 45206.18s
+Epoch 71/100 | Loss: 0.296683 | Time: 586.00s | Total Time: 45792.19s
+Epoch 72/100 | Loss: 0.232450 | Time: 592.46s | Total Time: 46384.66s
+  -> Save best pretrain model, loss: 0.232450
+Epoch 73/100 | Loss: 0.256542 | Time: 548.15s | Total Time: 46932.83s
+Epoch 74/100 | Loss: 0.347388 | Time: 606.99s | Total Time: 47539.82s
+Epoch 75/100 | Loss: 0.402548 | Time: 557.27s | Total Time: 48097.11s
+Epoch 76/100 | Loss: 0.346621 | Time: 578.65s | Total Time: 48675.76s
+Epoch 77/100 | Loss: 0.305907 | Time: 577.48s | Total Time: 49253.25s
+Epoch 78/100 | Loss: 0.341756 | Time: 589.93s | Total Time: 49843.19s
+Epoch 79/100 | Loss: 0.339211 | Time: 631.47s | Total Time: 50474.68s
+Epoch 80/100 | Loss: 0.341735 | Time: 579.49s | Total Time: 51054.17s
+Epoch 81/100 | Loss: 0.331636 | Time: 562.69s | Total Time: 51616.87s
+Epoch 82/100 | Loss: 0.248426 | Time: 594.24s | Total Time: 52211.12s
+Epoch 83/100 | Loss: 0.322557 | Time: 568.50s | Total Time: 52779.63s
+Epoch 84/100 | Loss: 0.274344 | Time: 562.98s | Total Time: 53342.62s
+Epoch 85/100 | Loss: 0.281742 | Time: 576.39s | Total Time: 53919.03s
+Epoch 86/100 | Loss: 0.259618 | Time: 586.34s | Total Time: 54505.38s
+Epoch 87/100 | Loss: 0.338432 | Time: 559.16s | Total Time: 55064.55s
+Epoch 88/100 | Loss: 0.357478 | Time: 562.04s | Total Time: 55626.60s
+Epoch 89/100 | Loss: 0.304190 | Time: 577.71s | Total Time: 56204.32s
+Epoch 90/100 | Loss: 0.280552 | Time: 595.11s | Total Time: 56799.44s
+Epoch 91/100 | Loss: 0.310647 | Time: 588.50s | Total Time: 57387.96s
+Epoch 92/100 | Loss: 0.281338 | Time: 589.49s | Total Time: 57977.45s
+Epoch 93/100 | Loss: 0.249130 | Time: 590.18s | Total Time: 58567.64s
+Epoch 94/100 | Loss: 0.302777 | Time: 578.11s | Total Time: 59145.75s
+Epoch 95/100 | Loss: 0.263436 | Time: 596.01s | Total Time: 59741.78s
+Epoch 96/100 | Loss: 0.292200 | Time: 590.16s | Total Time: 60331.95s
+Epoch 97/100 | Loss: 0.271197 | Time: 579.68s | Total Time: 60911.64s
+Epoch 98/100 | Loss: 0.319231 | Time: 569.66s | Total Time: 61481.31s
+Epoch 99/100 | Loss: 0.306086 | Time: 606.93s | Total Time: 62088.26s
+Epoch 100/100 | Loss: 0.241404 | Time: 581.04s | Total Time: 62669.30s
